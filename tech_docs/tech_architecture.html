@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullah Karif Shahjada - 3D Portfolio Technical Architecture</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap');
+
+  @page {
+    size: A4;
+    margin: 12mm 14mm 12mm 14mm;
+    @bottom-right {
+      content: "Page " counter(page) " of " counter(pages);
+      font-size: 8pt;
+      color: #64748b;
+      font-family: 'Inter', sans-serif;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #0f172a;
+    background: #ffffff;
+    font-size: 9pt;
+    line-height: 1.48;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Header Section */
+  .doc-header {
+    background: linear-gradient(135deg, #09122C 0%, #172554 45%, #1e1b4b 100%);
+    color: #ffffff;
+    padding: 22px 26px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    border: 1px solid #1e3a8a;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+  }
+
+  .doc-badge-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 7.2pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+  }
+
+  .badge-primary { background: #3b82f6; color: #ffffff; }
+  .badge-success { background: #10b981; color: #ffffff; }
+  .badge-warning { background: #f59e0b; color: #1e293b; }
+  .badge-dark { background: rgba(255, 255, 255, 0.15); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.2); }
+
+  .doc-title {
+    font-size: 19pt;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 5px;
+    color: #ffffff;
+  }
+
+  .doc-subtitle {
+    font-size: 10.5pt;
+    color: #93c5fd;
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 8pt;
+  }
+
+  .meta-item strong {
+    display: block;
+    color: #60a5fa;
+    font-size: 7.2pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .meta-item span {
+    color: #f1f5f9;
+    font-weight: 600;
+  }
+
+  /* Section Styling */
+  .section {
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-size: 12pt;
+    font-weight: 800;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #0284c7;
+    margin-bottom: 10px;
+  }
+
+  .section-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: #0284c7;
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 8.5pt;
+    font-weight: 700;
+  }
+
+  /* Technical Component Cards */
+  .tech-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin-bottom: 9px;
+  }
+
+  .tech-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .tech-card-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #0369a1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bilingual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 5px;
+  }
+
+  .en-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #2563eb;
+    border-radius: 5px;
+    padding: 7px 9px;
+    font-size: 8.2pt;
+    line-height: 1.45;
+  }
+
+  .bn-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 3px solid #16a34a;
+    border-radius: 5px;
+    padding: 7px 9px;
+    font-size: 8.2pt;
+    line-height: 1.45;
+  }
+
+  .box-label {
+    font-size: 6.8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+  }
+
+  .en-box .box-label { color: #1d4ed8; }
+  .bn-box .box-label { color: #15803d; }
+
+  /* Tables */
+  .spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 8.2pt;
+  }
+
+  .spec-table th {
+    background: #0f172a;
+    color: #ffffff;
+    text-align: left;
+    padding: 6px 9px;
+    font-weight: 600;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .spec-table th:first-child { border-top-left-radius: 5px; }
+  .spec-table th:last-child { border-top-right-radius: 5px; }
+
+  .spec-table td {
+    padding: 6px 9px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  .spec-table tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+
+  .code-term {
+    font-family: 'Fira Code', monospace;
+    font-size: 7.5pt;
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 1px 4px;
+    border-radius: 3px;
+    border: 1px solid #cbd5e1;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  /* Architecture Flow Diagram */
+  .diagram-container {
+    background: #0f172a;
+    color: #f8fafc;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin: 8px 0;
+    font-size: 7.8pt;
+  }
+
+  .diagram-title {
+    font-size: 8pt;
+    font-weight: 700;
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 4px;
+  }
+
+  .diagram-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .diagram-node {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 5px;
+    padding: 6px 8px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .diagram-node.active {
+    border-color: #38bdf8;
+    background: #082f49;
+  }
+
+  .diagram-node strong {
+    display: block;
+    color: #38bdf8;
+    font-size: 8pt;
+    margin-bottom: 2px;
+  }
+
+  .diagram-arrow {
+    color: #64748b;
+    font-size: 11pt;
+    font-weight: bold;
+  }
+
+  /* Key Highlights Callout */
+  .callout {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    border-radius: 5px;
+    padding: 9px 12px;
+    margin: 8px 0;
+    font-size: 8.2pt;
+  }
+
+  .callout-title {
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 4px;
+    font-size: 8.8pt;
+  }
+
+  ul, ol {
+    margin-left: 16px;
+    margin-top: 4px;
+  }
+
+  li {
+    margin-bottom: 3px;
+  }
+
+  .footer-note {
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.2pt;
+    color: #64748b;
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: COVER & EXECUTIVE BLUEPRINT -->
+<div class="doc-header">
+  <div class="doc-badge-row">
+    <span class="badge badge-primary">Technical Architecture</span>
+    <span class="badge badge-success">Production Verified</span>
+    <span class="badge badge-warning">60 FPS WebGL 2.0</span>
+    <span class="badge badge-dark">Karvion Labs &copy; 2026</span>
+  </div>
+  <h1 class="doc-title">3D INTERACTIVE AI AUTOMATION PORTFOLIO</h1>
+  <div class="doc-subtitle">Complete Technology Stack, 3D Graphics Engine & System Architecture Blueprint</div>
+  
+  <div class="meta-grid">
+    <div class="meta-item">
+      <strong>Developer & Owner</strong>
+      <span>Abdullah Karif Shahjada</span>
+    </div>
+    <div class="meta-item">
+      <strong>Brand & Laboratory</strong>
+      <span>Karvion Labs (2026)</span>
+    </div>
+    <div class="meta-item">
+      <strong>Engineering Baseline</strong>
+      <span>Three.js + React + GLSL</span>
+    </div>
+    <div class="meta-item">
+      <strong>Architecture Type</strong>
+      <span>Hybrid WebGL & CSS3D OS</span>
+    </div>
+  </div>
+</div>
+
+<div class="section avoid-break">
+  <h2 class="section-title"><span class="section-number">01</span> Executive Technical Summary (প্রকল্প পরিচিতি ও সারসংক্ষেপ)</h2>
+  
+  <p style="margin-bottom: 6px;">
+    This technical document serves as the master engineering blueprint for Abdullah Karif Shahjada's interactive 3D portfolio. It provides an exhaustive, point-by-point breakdown of the 3D graphics pipeline, procedural GLSL shaders, mechanical audio Foley architecture, React/TypeScript OS, decoupled client-side database, and hidden administrative station.
+  </p>
+
+  <div class="bilingual-grid">
+    <div class="en-box">
+      <div class="box-label">English Technical Overview</div>
+      A cutting-edge WebGL 2.0 application combining an isometric 3D developer studio with an authentic retro desktop operating system (Windows 98/2000 style). The outer room is rendered on a hardware-accelerated WebGL canvas, while the internal CRT monitor utilizes Three.js CSS3DRenderer with matrix3d perspective projections to host a fully interactive, reactive TypeScript application.
+    </div>
+    <div class="bn-box">
+      <div class="box-label">বাংলায় সহজ ব্যাখ্যা (সারসংক্ষেপ)</div>
+      এটি একটি অত্যাধুনিক ইন্টারেক্টিভ থ্রিডি পোর্টফোলিও যেখানে বাইরে একটি বাস্তবসম্মত থ্রিডি কম্পিউটার রুম এবং ভেতরের মনিটরে একটি সম্পূর্ণ সচল রেট্রো অপারেটিং সিস্টেম (Windows 98/2000 স্টাইল) চলে। হেনরি হেফারনানের কনসেপ্টকে রিভার্স-ইঞ্জিনিয়ারিং করে এতে আব্দুল্লাহ কারিফ শাহজাদার এআই অটোমেশন সিস্টেম, মেকানিক্যাল টাইপিং সাউন্ড এবং সম্পূর্ণ সিক্রেট অ্যাডমিন প্যানেল যুক্ত করা হয়েছে।
+    </div>
+  </div>
+</div>
+
+<div class="section avoid-break">
+  <h2 class="section-title"><span class="section-number">02</span> Master Technology Matrix (প্রযুক্তির সম্পূর্ণ তালিকা)</h2>
+
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th style="width: 25%;">Domain / Component</th>
+        <th style="width: 35%;">Technology & Framework (English)</th>
+        <th style="width: 40%;">Purpose & Function (বাংলা ব্যাখ্যা)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>3D Graphics Engine</strong></td>
+        <td><span class="code-term">Three.js (v0.137.5)</span> / WebGL 2.0</td>
+        <td>ব্রাউজারে রিয়েল-টাইম হার্ডওয়্যার অ্যাক্সিলারেটেড থ্রিডি রুম ও ক্যামেরা নিয়ন্ত্রণ।</td>
+      </tr>
+      <tr>
+        <td><strong>3D Light Baking</strong></td>
+        <td><span class="code-term">Blender Cycles Engine</span></td>
+        <td>আলো ও নরম ছায়া আগেই টেক্সচারে বেক (Bake) করা, যার ফলে কোনো ল্যাগ ছাড়াই ৬০ FPS চলে।</td>
+      </tr>
+      <tr>
+        <td><strong>Procedural Coffee Steam</strong></td>
+        <td><span class="code-term">GLSL (OpenGL Shading Language)</span></td>
+        <td>কফি মগের ধোঁয়ার জন্য কাস্টম গাণিতিক ফ্র্যাগমেন্ট ও ভার্টেক্স শেডার।</td>
+      </tr>
+      <tr>
+        <td><strong>Inner Monitor OS</strong></td>
+        <td><span class="code-term">React 17</span> + <span class="code-term">TypeScript 4.6.2</span></td>
+        <td>কম্পিউটারের ভেতরের উইন্ডোজ ওএস, উইন্ডো খোলা-বন্ধ ও প্রজেক্ট প্রদর্শনের মূল ফ্রেমওয়ার্ক।</td>
+      </tr>
+      <tr>
+        <td><strong>3D Screen Projection</strong></td>
+        <td><span class="code-term">Three.js CSS3DRenderer</span></td>
+        <td>রিয়েল HTML5 DOM আইফ্রেমকে থ্রিডি মনিটরের ওপর <span class="code-term">matrix3d()</span> দিয়ে স্থাপন।</td>
+      </tr>
+      <tr>
+        <td><strong>Camera Choreography</strong></td>
+        <td><span class="code-term">GSAP</span> + <span class="code-term">bezier-easing</span></td>
+        <td>আইসোমেট্রিক রুম ভিউ থেকে মসৃণভাবে মনিটরের ভেতর জুম-ইন ও জুম-আউট ট্রানজিশন।</td>
+      </tr>
+      <tr>
+        <td><strong>Audio & Foley System</strong></td>
+        <td><span class="code-term">Web Audio API</span> + HTML5 Audio</td>
+        <td>কী-বোর্ড টাইপিংয়ের ৬টি মেকানিক্যাল ক্লিক সাউন্ড এবং ব্যাকগ্রাউন্ড ক্যাসেট অ্যাম্বিয়েন্স।</td>
+      </tr>
+      <tr>
+        <td><strong>Client Database & Storage</strong></td>
+        <td><span class="code-term">HTML5 LocalStorage</span> + In-Memory</td>
+        <td>প্রজেক্ট ডেটা, ক্লায়েন্ট লিডস ও অ্যাডমিন পাসওয়ার্ড সুরক্ষিত ব্রাউজার স্টোরেজ।</td>
+      </tr>
+      <tr>
+        <td><strong>Master Admin CMS</strong></td>
+        <td>Vanilla TypeScript + CSS3 (<span class="code-term">admin.html</span>)</td>
+        <td>পুরোপুরি হিডেন পাসওয়ার্ড সুরক্ষিত মাস্টার কন্ট্রোল স্টেশন (লিডস ও প্রজেক্ট ম্যানেজমেন্ট)।</td>
+      </tr>
+      <tr>
+        <td><strong>Build & Runtime Server</strong></td>
+        <td><span class="code-term">Vite ESM Server</span> / Node.js Engine</td>
+        <td>লাইভ ডেভ সার্ভার ও অপটিমাইজড স্ট্যাটিক এজ বান্ডলার।</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PAGE BREAK: 3D GRAPHICS & PROCEDURAL SHADERS -->
+<div class="page-break"></div>
+
+<div class="section">
+  <h2 class="section-title"><span class="section-number">03</span> 3D Graphics Engine & Environment Design (থ্রিডি ডিজাইন ও স্পেশাল ইফেক্টস)</h2>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">1. The 3D Room & Light Baking Architecture (রুম ও বেকিং প্রযুক্তি)</div>
+      <span class="badge badge-primary">Blender + Three.js</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="en-box">
+        <div class="box-label">Technical Mechanics</div>
+        Standard real-time shadows in WebGL require heavy shadow maps and multi-pass rendering, causing severe frame drops on laptops and integrated GPUs. To achieve silky-smooth 60 FPS, all Global Illumination (GI), ambient occlusion, and soft lighting were <strong>pre-baked in Blender Cycles</strong> into high-resolution texture atlases (<span class="code-term">room.jpg</span>). The meshes are rendered in Three.js using lightweight <span class="code-term">MeshBasicMaterial</span>, reducing draw-call overhead to under 2ms per frame.
+      </div>
+      <div class="bn-box">
+        <div class="box-label">বাংলায় সহজ ব্যাখ্যা</div>
+        সাধারণত ব্রাউজারে রিয়েল-টাইম লাইট ও ছায়া ক্যালকুলেট করলে কম্পিউটার স্লো বা হ্যাং হয়ে যায়। তাই ব্লেন্ডার (Blender Cycles) সফটওয়্যার দিয়ে রুমের সমস্ত লাইটিং ও শ্যাডো আগে থেকেই ছবির মতো টেক্সচারে <strong>"বেক (Bake)"</strong> করে নেওয়া হয়েছে। ফলে ব্রাউজারকে লাইটের ভারী হিসেব করতে হয় না এবং যেকোনো নরমাল ল্যাপটপ বা মোবাইলেও এটি মাখনের মতো ৬০ FPS স্পিডে চলে।
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">2. Coffee Mug & Procedural GPU Steam Shader (কফি ও ধোঁয়ার শেডার)</div>
+      <span class="badge badge-warning">Custom GLSL</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="en-box">
+        <div class="box-label">Technical Mechanics</div>
+        The hot coffee steam is NOT a static GIF or expensive particle system. It is generated mathematically in real-time on the GPU using custom <strong>GLSL shaders</strong> (<span class="code-term">coffee/fragment.glsl</span> & <span class="code-term">coffee/vertex.glsl</span>). A vertical plane above the ceramic mug runs Perlin/Simplex noise algorithms parameterized by uniform <span class="code-term">uTime</span>, organically distorting texture UVs to simulate rising atmospheric vapor at zero CPU cost.
+      </div>
+      <div class="bn-box">
+        <div class="box-label">বাংলায় সহজ ব্যাখ্যা</div>
+        কফি মগের উপর যে ধোঁয়া উঠছে, তা কোনো সাধারণ ছবি বা ভিডিও নয়। এটি জিপিইউ (GPU)-র ভেতরে সরাসরি <strong>GLSL ম্যাথমেটিকাল কোডিং</strong> দিয়ে তৈরি করা হয়েছে। গণিতের পার্লিন নয়েজ (Perlin Noise) ও টাইমিং অ্যালগরিদম ব্যবহার করে ধোঁয়াটা প্রাকৃতিক বাতাসের মতো হেলেদুলে উপর দিকে ওঠে, যা দেখতে অত্যন্ত রিয়েলিস্টিক এবং প্রসেসরের কোনো ক্ষতি করে না।
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">3. Desk, CRT Monitor & Raycasting Alignment (কম্পিউটার টেবিল ও ইন্টারেকশন)</div>
+      <span class="badge badge-success">Raycasting + GSAP</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="en-box">
+        <div class="box-label">Technical Mechanics</div>
+        The wooden desk, keyboard, mouse, and CRT monitor are arranged in an isometric perspective. To enable natural mouse clicking on 3D objects, a Three.js <span class="code-term">Raycaster</span> projects a 2D mouse coordinate vector into 3D clip space. When the ray intersects the computer monitor mesh, it triggers a choreographed GSAP camera tween with custom cubic bezier curves, seamlessly zooming the viewport directly into the screen surface.
+      </div>
+      <div class="bn-box">
+        <div class="box-label">বাংলায় সহজ ব্যাখ্যা</div>
+        টেবিল, কীবোর্ড ও মনিটর একটি দৃষ্টিনন্দন আইসোমেট্রিক অ্যাঙ্গেলে সাজানো। থ্রিডি রেইকাস্টিং (Raycasting) প্রযুক্তির মাধ্যমে মাউস ঠিক কোন অবজেক্টের উপর আছে তা ব্রাউজার বুঝতে পারে। মনিটরে ক্লিক করার সাথে সাথে GSAP অ্যানিমেশন ক্যামেরাকে মাখনের মতো মসৃণভাবে সোজা কম্পিউটারের স্ক্রিনের মধ্যে জুম করিয়ে দেয়।
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-container avoid-break">
+    <div class="diagram-title">3D Rendering & Compositing Pipeline (গ্রাফিক্স পাইপলাইন ফ্লো)</div>
+    <div class="diagram-row">
+      <div class="diagram-node">
+        <strong>1. Blender Cycles</strong>
+        Baked Texture Atlas (room.jpg)
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node active">
+        <strong>2. Three.js WebGL</strong>
+        MeshBasicMaterial (0 Shadow Math)
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node">
+        <strong>3. GLSL Procedural</strong>
+        Perlin Steam on Coffee Mug
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node active">
+        <strong>4. 60 FPS Viewport</strong>
+        DPI Capped &lt; 2.0 (Zero Lag)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BREAK: RETRO OS & INNER COMPUTER -->
+<div class="page-break"></div>
+
+<div class="section">
+  <h2 class="section-title"><span class="section-number">04</span> The Retro OS & Inner Computer Architecture (কম্পিউটারের ভেতরের রেট্রো ওএস)</h2>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">1. Three.js CSS3DRenderer & Matrix3D Perspective (থ্রিডি স্ক্রিন প্রজেকশন)</div>
+      <span class="badge badge-primary">CSS3D Engine</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="en-box">
+        <div class="box-label">Technical Mechanics</div>
+        Standard WebGL can only render 2D textures or canvas bitmaps, which cannot accept selectable text, links, or native inputs. This architecture solves that limitation using Three.js <span class="code-term">CSS3DRenderer</span>. A real HTML5 DOM <span class="code-term">&lt;iframe&gt;</span> is transformed via CSS <span class="code-term">matrix3d(...)</span> calculations to align pixel-perfectly with the 3D CRT glass geometry, allowing fully functional web browsing inside the 3D room.
+      </div>
+      <div class="bn-box">
+        <div class="box-label">বাংলায় সহজ ব্যাখ্যা</div>
+        থ্রিডি ক্যানভাসের ভেতরে সাধারণ ওয়েবপেজের লিংক বা টেক্সট ক্লিক করা যায় না। এই সমস্যা সমাধানের জন্য Three.js-এর <span class="code-term">CSS3DRenderer</span> ব্যবহার করা হয়েছে। এটি একটি আসল ওয়েবপেজকে (iframe) গণিতিক ম্যাট্রিক্স (<span class="code-term">matrix3d</span>) দিয়ে ঠিক কম্পিউটারের কাঁচের মনিটরের মাপে ৩৬০ ডিগ্রিতে ফিট করে দেয়, যার ফলে মনিটরের ভেতরের সব বাটন ও উইন্ডো আসল কম্পিউটারের মতোই কাজ করে।
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">2. React 17 + TypeScript Window Management (উইন্ডো ও ওএস ম্যানেজমেন্ট)</div>
+      <span class="badge badge-success">React + Framer Motion</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="en-box">
+        <div class="box-label">Technical Mechanics</div>
+        The desktop environment inside the CRT screen is a full Single Page Application (SPA) powered by <strong>React 17</strong> and strict <strong>TypeScript 4.6.2</strong>. It includes a custom virtual Window Manager handling draggable title bars, minimize/maximize state machines, z-index focus layering, taskbar icon synchronization, and React Router v6 navigation.
+      </div>
+      <div class="bn-box">
+        <div class="box-label">বাংলায় সহজ ব্যাখ্যা</div>
+        মনিটরের ভেতরের অপারেটিং সিস্টেমটি রিঅ্যাক্ট (React) এবং টাইপস্ক্রিপ্ট (TypeScript) দিয়ে তৈরি। এতে আসল উইন্ডোজ ৯৮ বা ২০০০-এর মতো যেকোনো উইন্ডো মাউস দিয়ে ধরে টেনে সরানো যায় (Drag), ছোট-বড় করা যায় (Minimize/Maximize) এবং নিচের টাস্কবারে ক্লিক করে সুইচ করা যায়।
+      </div>
+    </div>
+  </div>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">3. The 4 AI Automation Systems Display (অটোমেশন প্রজেক্টস শোকেস)</div>
+      <span class="badge badge-warning">Software.tsx Engine</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="en-box">
+        <div class="box-label">Technical Mechanics</div>
+        The projects section specifically showcases Abdullah's 4 enterprise automation systems:
+        1. <strong>Autonomous Inbound Lead Routing</strong> (Make/n8n/GPT-4)
+        2. <strong>Custom E-Commerce Automation</strong> (Inventory & Order Sync)
+        3. <strong>Mobile Client Portal</strong> (PWA & Real-Time Sync)
+        4. <strong>Meta Performance Marketing Engine</strong> (Creative Optimization)
+        Hydrates dynamically from database state with instant live fallback.
+      </div>
+      <div class="bn-box">
+        <div class="box-label">বাংলায় সহজ ব্যাখ্যা</div>
+        প্রজেক্ট ফোল্ডারে ক্লিক করলে অপ্রয়োজনীয় কোনো ছবি বা আর্ট নয়, সরাসরি আব্দুল্লাহ কারিফ শাহজাদার ৪টি হাই-ভ্যালু এআই অটোমেশন প্রজেক্ট দেখা যায়। প্রতিটি প্রজেক্টের ভেতরে লাইভ সিস্টেম আর্কিটেকচার, ডেপ্লয়মেন্ট স্ট্যাক এবং ফুল-স্ক্রিন স্ক্রিনশট ডেমো ইন্টিগ্রেট করা আছে।
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-container avoid-break">
+    <div class="diagram-title">Retro OS Window Management & Routing Flow</div>
+    <div class="diagram-row">
+      <div class="diagram-node">
+        <strong>Desktop Icons / Start Menu</strong>
+        User Click Event (Pointer)
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node active">
+        <strong>React Window Manager</strong>
+        State: { activeId, zIndex, isMinimized }
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node">
+        <strong>Software.tsx Component</strong>
+        4 Enterprise Automation Cards
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node active">
+        <strong>Modal / Resume PDF</strong>
+        Live In-App Interactive Preview
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BREAK: AUDIO FOLEY & DATABASE -->
+<div class="page-break"></div>
+
+<div class="section">
+  <h2 class="section-title"><span class="section-number">05</span> Audio Foley Architecture & Sound Design (সাউন্ড ও অডিও সিস্টেম)</h2>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">Mechanical Typing & Ambient Audio Engineering</div>
+      <span class="badge badge-primary">Web Audio API</span>
+    </div>
+    <div class="bilingual-grid">
+      <div class="en-box">
+        <div class="box-label">Technical Mechanics</div>
+        Features a bespoke Foley audio soundstage. Keystrokes inside any input field or terminal trigger a randomized selector across 6 distinct mechanical keyboard click samples (<span class="code-term">key_1.mp3</span> to <span class="code-term">key_6.mp3</span>), preventing repetitive audio fatigue. Looping background ambient room tone (cassette tape white noise) runs through a decoupled HTML5 audio element with automatic autoplay unlock listeners.
+      </div>
+      <div class="bn-box">
+        <div class="box-label">বাংলায় সহজ ব্যাখ্যা</div>
+        কম্পিউটারের ভেতরে টাইপ করার সময় যে চমৎকার মেকানিক্যাল কীবোর্ডের সাউন্ড হয়, তার জন্য ৬টি আলাদা আলাদা আসল কীবোর্ড ক্লিকের সাউন্ড ফাইল রাখা হয়েছে। যখনই কোনো বোতাম চাপবেন, প্রতিবার লটারির মতো র‍্যান্ডম একটি সাউন্ড বাজে যাতে কান বিরক্ত না হয়। এছাড়াও ব্যাকগ্রাউন্ডে একটি মৃদু ক্যাসেট নয়েজ চলে যা নব্বই দশকের কম্পিউটারের আসল পরিবেশ তৈরি করে।
+      </div>
+    </div>
+  </div>
+
+  <div class="diagram-container avoid-break">
+    <div class="diagram-title">Foley Audio Architecture & Playback Pipeline</div>
+    <div class="diagram-row">
+      <div class="diagram-node">
+        <strong>DOM Keydown Event</strong>
+        Global Listener inside CRT OS
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node active">
+        <strong>Randomizer Function</strong>
+        Math.floor(Math.random() * 6) + 1
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node">
+        <strong>Audio Sample Pool</strong>
+        key_1.mp3 ... key_6.mp3
+      </div>
+      <div class="diagram-arrow">&rarr;</div>
+      <div class="diagram-node active">
+        <strong>Web Audio DAC</strong>
+        Instant &lt; 5ms Zero-Latency Click
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section avoid-break">
+  <h2 class="section-title"><span class="section-number">06</span> Database, Storage & Backend Architecture (ডাটাবেস ও ব্যাকএন্ড)</h2>
+
+  <table class="spec-table">
+    <thead>
+      <tr>
+        <th style="width: 25%;">Layer / Storage</th>
+        <th style="width: 35%;">Implementation (English)</th>
+        <th style="width: 40%;">How It Works (বাংলা ব্যাখ্যা)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Client Database</strong></td>
+        <td>HTML5 <span class="code-term">localStorage</span> JSON Repositories</td>
+        <td><span class="code-term">folio_admin_database</span> এবং <span class="code-term">folio_client_leads</span> কী-তে সাইটের সব প্রজেক্ট ডেটা ও ক্লায়েন্টের মেসেজ ব্রাউজার মেমোরিতে সেভ থাকে।</td>
+      </tr>
+      <tr>
+        <td><strong>Master Admin Security</strong></td>
+        <td>Decoupled Auth Gateway (<span class="code-term">admin.html</span>)</td>
+        <td>কোনো সাধারণ ইউজার এটি দেখতে পায় না। শুধুমাত্র মাস্টার পাসওয়ার্ড (<span class="code-term">1234</span>) দিলেই সুরক্ষিত অ্যাডমিন কন্ট্রোল স্টেশন আনলক হয়।</td>
+      </tr>
+      <tr>
+        <td><strong>Export / Backup DB</strong></td>
+        <td>Live CSV & JSON Binary Streaming</td>
+        <td>অ্যাডমিন প্যানেল থেকে এক ক্লিকে ক্লায়েন্টের সমস্ত লিড এক্সেল/CSV আকারে এবং পুরো সাইটের ডেটা JSON ব্যাকআপ হিসেবে ডাউনলোড করা যায়।</td>
+      </tr>
+      <tr>
+        <td><strong>Backend Server</strong></td>
+        <td>Vite ESM Engine / Edge JAMstack</td>
+        <td>কোনো ধীরগতির সার্ভার নয়, এটি আল্ট্রা-ফাস্ট স্ট্যাটিক এজ সার্ভার (Vite/Cloudflare/Vercel) হিসেবে কাজ করে যাতে বিশ্বব্যাপী মিলি-সেকেন্ডে লোড হয়।</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- PAGE BREAK: AGENT SKILLS & PRESENTATION GUIDE -->
+<div class="page-break"></div>
+
+<div class="section">
+  <h2 class="section-title"><span class="section-number">07</span> AI Agent Skills & Reverse-Engineering Methodology (ব্যবহৃত এজেন্ট স্কিল)</h2>
+
+  <div class="tech-card avoid-break">
+    <div class="tech-card-header">
+      <div class="tech-card-title">Autonomous Agent Engineering Skills Used</div>
+      <span class="badge badge-primary">DeepMind Antigravity Skills</span>
+    </div>
+    
+    <ul style="margin-top: 5px; font-size: 8.2pt;">
+      <li style="margin-bottom: 7px;">
+        <strong>1. interactive-3d-automation-portfolio:</strong><br>
+        <span style="color: #475569;">Used to reverse-engineer Henry Heffernan's 2022 portfolio codebase, extract the Three.js 3D room coordinates, reconstruct the camera pathing, integrate Abdullah Karif Shahjada's high-ticket automation projects, and remove BIOS/Start screen hurdles for instantaneous entry.</span><br>
+        <span style="color: #15803d; font-weight: 500;">(বাংলা: হেনরি হেফারনানের জটিল থ্রিডি কোড রিভার্স-ইঞ্জিনিয়ারিং করা, রুমের থ্রিডি কাঠামো ঠিক রাখা এবং স্টার্টারের কালো টার্মিনাল বাইপাস করে সরাসরি সাইট চালুর কাজে ব্যবহৃত হয়েছে।)</span>
+      </li>
+      <li style="margin-bottom: 7px;">
+        <strong>2. smooth-60fps-and-hidden-admin-control:</strong><br>
+        <span style="color: #475569;">Used to eliminate WebGL memory leaks, enforce strict DevicePixelRatio constraints (<span class="code-term">Math.min(devicePixelRatio, 2)</span>) to stop mobile GPU overheating, and construct the retro Windows 2000 hidden admin control station (<span class="code-term">admin.html</span>) with master PIN protection.</span><br>
+        <span style="color: #15803d; font-weight: 500;">(বাংলা: ৬০ FPS স্পিড ধরে রাখা, মোবাইল বা সাধারণ ল্যাপটপে গরম না হওয়া নিশ্চিত করা এবং একটি সম্পূর্ণ লুকানো মাস্টার অ্যাডমিন প্যানেল তৈরি করতে এই স্কিল ব্যবহৃত হয়েছে।)</span>
+      </li>
+      <li style="margin-bottom: 7px;">
+        <strong>3. reverse-engineer-anything:</strong><br>
+        <span style="color: #475569;">Used to inspect Webpack bundled artifacts, map CSS3DRenderer matrix perspective transformations, and replace outdated art/music cards with high-ticket AI automation case studies and genuine Karvion Labs 2026 credits.</span><br>
+        <span style="color: #15803d; font-weight: 500;">(বাংলা: মূল ওয়েবপ্যাক বান্ডেল বিশ্লেষণ করে অপ্রয়োজনীয় আর্ট ও মিউজিক মুছে এআই অটোমেশন ও সততার সাথে সঠিক ক্রেডিট বসাতে এই স্কিল ব্যবহৃত হয়েছে।)</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="section avoid-break">
+  <h2 class="section-title"><span class="section-number">08</span> Teacher & Client Presentation Guide (শিক্ষক ও ক্লায়েন্টকে বোঝানোর নিয়ম)</h2>
+
+  <div class="callout avoid-break">
+    <div class="callout-title">How to Confidently Present This Portfolio to Your Teacher (Sir) or High-Ticket Clients:</div>
+    <ol style="margin-top: 5px; font-size: 8.2pt;">
+      <li style="margin-bottom: 5px;">
+        <strong>Show the 3D Room First:</strong> Explain that this is a <strong>Three.js WebGL 2.0 isometric world</strong> where lighting is pre-baked via <strong>Blender Cycles</strong>, allowing it to render at an uncompromised 60 FPS without GPU lag.<br>
+        <em>(স্যারকে বলবেন: "এটি একটি হার্ডওয়্যার অ্যাক্সিলারেটেড থ্রিডি রুম, যেখানে ব্লেন্ডার সাইকেলস দিয়ে লাইট বেকিং করা হয়েছে যাতে কোনো ল্যাগ ছাড়াই ৬০ ফ্রেম পার সেকেন্ডে চলে।")</em>
+      </li>
+      <li style="margin-bottom: 5px;">
+        <strong>Point out the Coffee Mug:</strong> Mention that the coffee steam is a <strong>custom GPU GLSL fragment shader</strong> running real-time Perlin noise math, not a pre-recorded video or GIF.<br>
+        <em>(ক্লায়েন্টকে বলবেন: "কফির ধোঁয়াটি কোনো ভিডিও নয়, এটি জিপিইউতে গাণিতিক GLSL শেডার অ্যালগরিদম দিয়ে রিয়েল-টাইমে তৈরি হচ্ছে।")</em>
+      </li>
+      <li style="margin-bottom: 5px;">
+        <strong>Click into the Computer:</strong> Point out the <strong>CSS3DRenderer matrix3d projection</strong> that turns a 3D CRT monitor into a real, functional <strong>React 17 + TypeScript</strong> desktop operating system.<br>
+        <em>(বলবেন: "কম্পিউটারের ভেতরের ওএসটি React এবং TypeScript দিয়ে তৈরি, যা Three.js CSS3DRenderer দিয়ে থ্রিডি স্পেসে নিখুঁতভাবে প্রজেক্ট করা হয়েছে।")</em>
+      </li>
+      <li style="margin-bottom: 5px;">
+        <strong>Demonstrate the Audio:</strong> Type on the keyboard to trigger the <strong>Web Audio API randomized mechanical switch Foley sound system</strong>.<br>
+        <em>(বলবেন: "কীবোর্ডে টাইপ করার সাথে সাথে ৬টি রিয়েল মেকানিক্যাল কীবোর্ডের সাউন্ড র‍্যান্ডমলি প্লে হয়, যা আসল অভিজ্ঞতার অনুভূতি দেয়।")</em>
+      </li>
+      <li style="margin-bottom: 5px;">
+        <strong>Reveal the Secret Admin Station:</strong> Explain that you have an isolated <strong>Master Administrative Station</strong> (<span class="code-term">/admin.html</span>) with master password protection (<span class="code-term">1234</span>) to manage leads and update automation case studies dynamically.<br>
+        <em>(বলবেন: "সম্পূর্ণ সাইটটি নিয়ন্ত্রণ করার জন্য একটি সম্পূর্ণ হিডেন মাস্টার অ্যাডমিন প্যানেল রয়েছে, যেখান থেকে ডাটাবেস ও ক্লায়েন্ট লিডস ম্যানেজ করা যায়।")</em>
+      </li>
+    </ol>
+  </div>
+
+  <div class="footer-note">
+    <span>Author & Owner: Abdullah Karif Shahjada</span>
+    <span>Brand: Karvion Labs (2026)</span>
+    <span>Original 3D Concept: Henry Heffernan</span>
+    <span>Generated: October 2026</span>
+  </div>
+</div>
+
+</body>
+</html>

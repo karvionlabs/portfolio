@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Administrator Station — Abdullah Karif Shahjada</title>
+  <style>
+    :root {
+      --bg-teal: #008080;
+      --win-gray: #c0c0c0;
+      --win-light-gray: #dfdfdf;
+      --win-border-light: #ffffff;
+      --win-border-dark: #808080;
+      --win-border-black: #000000;
+      --win-navy: #000080;
+      --win-navy-gradient: linear-gradient(90deg, #000080, #1084d0);
+      --text-main: #111111;
+      --text-muted: #555555;
+      --accent-green: #008000;
+      --accent-red: #c00000;
+      --accent-gold: #b8860b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "MS Sans Serif", Tahoma, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-teal);
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 0);
+      background-size: 16px 16px;
+      min-height: 100vh;
+      padding: 20px 14px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      color: var(--text-main);
+    }
+
+    /* Windows 98 / 2000 Box Styling */
+    .win-box {
+      background: var(--win-gray);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-black);
+      border-bottom: 2px solid var(--win-border-black);
+      box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.5);
+    }
+
+    .win-inset {
+      border-top: 2px solid var(--win-border-dark);
+      border-left: 2px solid var(--win-border-dark);
+      border-right: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-light);
+      background: white;
+    }
+
+    .main-window {
+      width: 100%;
+      max-width: 1060px;
+      padding: 3px;
+    }
+
+    /* Title Bar */
+    .title-bar {
+      background: var(--win-navy-gradient);
+      color: white;
+      padding: 4px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 13px;
+      letter-spacing: 0.4px;
+      user-select: none;
+    }
+
+    .title-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title-bar-controls {
+      display: flex;
+      gap: 3px;
+    }
+
+    .title-btn {
+      background: var(--win-gray);
+      border-top: 1px solid var(--win-border-light);
+      border-left: 1px solid var(--win-border-light);
+      border-right: 1px solid var(--win-border-black);
+      border-bottom: 1px solid var(--win-border-black);
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .title-btn:active {
+      border-top: 1px solid var(--win-border-black);
+      border-left: 1px solid var(--win-border-black);
+      border-right: 1px solid var(--win-border-light);
+      border-bottom: 1px solid var(--win-border-light);
+    }
+
+    /* Top Sub-Bar / Status Info */
+    .sub-bar {
+      background: var(--win-gray);
+      padding: 6px 12px;
+      border-bottom: 2px solid var(--win-border-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #e6ffe6;
+      border: 1px solid #66cc66;
+      color: #006600;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 2px;
+      font-size: 11px;
+    }
+
+    .status-badge.live-dot::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00cc00;
+      display: inline-block;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Tabs Bar */
+    .tabs-wrapper {
+      padding: 10px 10px 0 10px;
+      background: var(--win-gray);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 3px;
+      border-bottom: 2px solid var(--win-border-dark);
+      overflow-x: auto;
+      padding-bottom: 1px;
+    }
+
+    .tab-btn {
+      background: var(--win-gray);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-black);
+      border-bottom: none;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 12px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      position: relative;
+      top: 2px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.1s;
+    }
+
+    .tab-btn:hover {
+      background: #d4d4d4;
+    }
+
+    .tab-btn.active {
+      background: var(--win-light-gray);
+      border-bottom: 2px solid var(--win-light-gray);
+      top: 0;
+      padding-top: 8px;
+      padding-bottom: 6px;
+      z-index: 2;
+    }
+
+    /* Tab Contents */
+    .tab-pane {
+      display: none;
+      background: var(--win-light-gray);
+      padding: 18px 16px;
+      border: 2px solid var(--win-border-dark);
+      border-top: none;
+      min-height: 480px;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0.7; }
+      to { opacity: 1; }
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: bold;
+      font-size: 12px;
+      margin-bottom: 4px;
+      color: #222;
+    }
+
+    .label-hint {
+      font-size: 11px;
+      font-weight: normal;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 6px 9px;
+      font-size: 13px;
+      border-top: 2px solid var(--win-border-dark);
+      border-left: 2px solid var(--win-border-dark);
+      border-right: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-light);
+      background: white;
+      font-family: inherit;
+      color: #000;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 1px dotted #000;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+      line-height: 1.4;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Windows Buttons */
+    .btn {
+      background: var(--win-gray);
+      border-top: 2px solid var(--win-border-light);
+      border-left: 2px solid var(--win-border-light);
+      border-right: 2px solid var(--win-border-black);
+      border-bottom: 2px solid var(--win-border-black);
+      padding: 6px 16px;
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    .btn:active {
+      border-top: 2px solid var(--win-border-black);
+      border-left: 2px solid var(--win-border-black);
+      border-right: 2px solid var(--win-border-light);
+      border-bottom: 2px solid var(--win-border-light);
+      padding-top: 7px;
+      padding-bottom: 5px;
+    }
+
+    .btn-primary {
+      background: #000080;
+      color: white;
+    }
+
+    .btn-success {
+      background: #008000;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #c00000;
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 3px 9px;
+      font-size: 11px;
+    }
+
+    /* Cards */
+    .section-card {
+      background: white;
+      border: 1px solid var(--win-border-dark);
+      padding: 14px;
+      margin-bottom: 14px;
+      box-shadow: 1px 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--win-navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Project Item Card */
+    .project-card {
+      background: #fafafa;
+      border: 1px solid #aaa;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: #666;
+      background: #fdfdfd;
+    }
+
+    .project-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .project-badge {
+      background: var(--win-navy);
+      color: white;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: bold;
+      border-radius: 2px;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      background: #e8e8e8;
+      border: 1px solid #ccc;
+      color: #333;
+      padding: 2px 7px;
+      font-size: 11px;
+      border-radius: 3px;
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--win-border-dark);
+      background: white;
+      max-height: 420px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    th {
+      background: #e8e8e8;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    tr:hover {
+      background: #f0f7ff;
+    }
+
+    /* Banner Helper */
+    .helper-banner {
+      background: #ffffd9;
+      border: 1px solid #d4c885;
+      padding: 10px 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .helper-banner strong {
+      color: #554400;
+    }
+
+    /* Toast Notification */
+    #toastNotice {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #ffffcc;
+      border: 2px solid #333;
+      box-shadow: 3px 3px 12px rgba(0,0,0,0.5);
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: bold;
+      display: none;
+      z-index: 100000;
+      align-items: center;
+      gap: 8px;
+      animation: slideUp 0.2s ease-out;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Action Footer Bar */
+    .action-bar {
+      margin-top: 14px;
+      background: var(--win-gray);
+      border-top: 2px solid var(--win-border-dark);
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* AUTH OVERLAY MODAL */
+    #authOverlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(2px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999;
+    }
+
+    .auth-window {
+      width: 420px;
+      padding: 3px;
+    }
+
+    .auth-body {
+      background: var(--win-light-gray);
+      padding: 20px 18px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- AUTHENTICATION GATE MODAL -->
+<div id="authOverlay">
+  <div class="win-box auth-window">
+    <div class="title-bar">
+      <div class="title-bar-left">
+        <span>🔒 Windows Security — Master Administrator</span>
+      </div>
+      <div class="title-bar-controls">
+        <button class="title-btn" onclick="window.location.href='/'">✕</button>
+      </div>
+    </div>
+    <div class="auth-body">
+      <div style="display:flex; gap:14px; align-items:center; margin-bottom:16px;">
+        <span style="font-size: 38px;">🛡️</span>
+        <div>
+          <h3 style="font-size: 14px; color: var(--win-navy);">Abdullah Karif Shahjada</h3>
+          <p style="font-size: 12px; color: #444; margin-top: 2px;">
+            Enter your Master Administrator Password to unlock and control portfolio database.
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="authPwdInput">
+          Master Password (ডিফল্ট: 1234):
+          <span class="label-hint">Confidential</span>
+        </label>
+        <div style="display:flex; gap:4px;">
+          <input type="password" id="authPwdInput" autofocus onkeydown="if(event.key==='Enter') verifyLogin()">
+          <button class="btn btn-sm" type="button" onclick="togglePasswordVisibility('authPwdInput')">👁️</button>
+        </div>
+      </div>
+
+      <div id="authError" style="color: #c00000; font-size: 12px; font-weight: bold; margin-bottom: 12px; display: none; background: #ffe6e6; padding: 6px 10px; border: 1px solid #cc9999;">
+        ❌ Access Denied: Incorrect Master Password.
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px;">
+        <button class="btn btn-primary" onclick="verifyLogin()">🔑 Log In</button>
+        <button class="btn" onclick="window.location.href='/'">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN ADMINISTRATOR WORKSTATION -->
+<div class="win-box main-window" id="mainAdminWindow" style="display:none;">
+  <!-- Title Bar -->
+  <div class="title-bar">
+    <div class="title-bar-left">
+      <span>🖥️ Administrator Workstation & Database Console — Abdullah Karif Shahjada</span>
+    </div>
+    <div class="title-bar-controls">
+      <button class="title-btn" title="View 3D Portfolio" onclick="window.location.href='/'">_</button>
+      <button class="title-btn" title="Lock Station" onclick="logoutAdmin()">✕</button>
+    </div>
+  </div>
+
+  <!-- Sub-Header / Status Bar -->
+  <div class="sub-bar">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span class="status-badge live-dot">LIVE DATABASE CONNECTED</span>
+      <span style="color:#555;">|</span>
+      <span>Target: <strong>AI Automation Portfolio '26</strong></span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span id="liveClock" style="font-family:monospace; font-weight:bold; color:#000080;">--:--:--</span>
+      <button class="btn btn-sm" onclick="logoutAdmin()" title="Lock Station">🔒 Lock Station</button>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <div class="tabs-wrapper">
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('profile', this)">
+        <span>👤</span> Identity & Bio
+      </button>
+      <button class="tab-btn" onclick="switchTab('projects', this)">
+        <span>🚀</span> Projects Manager
+      </button>
+      <button class="tab-btn" onclick="switchTab('skills', this)">
+        <span>⚡</span> Skills & Stack
+      </button>
+      <button class="tab-btn" onclick="switchTab('resume', this)">
+        <span>📄</span> Resume & Files
+      </button>
+      <button class="tab-btn" onclick="switchTab('leads', this)">
+        <span>📬</span> Client Inquiries <span id="leadsBadge" class="status-badge" style="background:#000080; color:white; border:none; padding:1px 6px;">0</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('audio3d', this)">
+        <span>🎛️</span> 3D Room & Audio
+      </button>
+      <button class="tab-btn" onclick="switchTab('security', this)">
+        <span>🔒</span> Password & Backup
+      </button>
+      <button class="tab-btn" onclick="switchTab('guide', this)">
+        <span>📖</span> Help & Guide
+      </button>
+    </div>
+  </div>
+
+  <!-- TAB 1: IDENTITY & PROFILE -->
+  <div id="tab-profile" class="tab-pane active">
+    <div class="helper-banner">
+      <span>💡</span>
+      <div>
+        <strong>প্রোফাইল নির্দেশিকা:</strong> এখানে তোমার নাম, পদবী, ইমেইল ও বায়ো পরিবর্তন করতে পারবে। সেভ করার সাথে সাথে সম্পূর্ণ সাইটে তোমার নতুন তথ্য প্রতিফলিত হবে।
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">👤 Personal Identity & Branding</span>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Full English Name (পূর্ণ নাম):</label>
+          <input type="text" id="profName" value="Abdullah Karif Shahjada">
+        </div>
+        <div class="form-group">
+          <label>Headline / Primary Role (মূল পদবী):</label>
+          <input type="text" id="profHeadline" value="AI Automation">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Sub-Headline / Secondary Disciplines:</label>
+        <input type="text" id="profSubHeadline" value="AI Automation Specialist, App & Web Developer, Meta Marketing Expert">
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">🎓 Education & Credentials</span>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Institute Name (ইনস্টিটিউট):</label>
+          <input type="text" id="profInstitution" value="As-Sunnah Skill Development Institute (1st Batch)">
+        </div>
+        <div class="form-group">
+          <label>Graduation Year:</label>
+          <input type="text" id="profCourseYear" value="2026">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Course / Program Title:</label>
+        <input type="text" id="profCertification" value="Professional AI Automation Course (1st Batch)">
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">📞 Contact Channels & Bio</span>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Email Address:</label>
+          <input type="email" id="profEmail" value="hellokarvionlabs@gmail.com">
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number:</label>
+          <input type="text" id="profWhatsApp" value="+880 1884-636312">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Bio Summary (About Me সেকশনের বিবরণ):</label>
+        <textarea id="profBio" rows="4">AI Automation Specialist specializing in building intelligent automated workflows and social media automation systems, software/app development, and Meta marketing.</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: PROJECTS MANAGER -->
+  <div id="tab-projects" class="tab-pane">
+    <div class="helper-banner">
+      <span>🚀</span>
+      <div>
+        <strong>প্রজেক্ট ম্যানেজার নির্দেশিকা:</strong> পোর্টফোলিওর "Projects" অপশনে যে প্রজেক্টগুলো প্রদর্শিত হচ্ছে, সেগুলো এখানে সরাসরি এডিট বা পরিবর্তন করতে পারবে। নতুন প্রজেক্ট অ্যাড করতে <strong>"+ Add New Project"</strong> চাপো।
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h3 style="font-size:14px; color:var(--win-navy);">Active Portfolio Projects (<span id="projectsCountLabel">4</span>)</h3>
+      <button class="btn btn-primary" onclick="addNewProject()">+ Add New Project</button>
+    </div>
+
+    <div id="projectsList">
+      <!-- Dynamically generated projects -->
+    </div>
+  </div>
+
+  <!-- TAB 3: SKILLS & STACK -->
+  <div id="tab-skills" class="tab-pane">
+    <div class="helper-banner">
+      <span>⚡</span>
+      <div>
+        <strong>টেক স্কিলস নির্দেশিকা:</strong> তোমার মূল টেকনোলজি স্ট্যাক ও এক্সপার্টিজের তালিকা কমা দিয়ে আলাদা করে লিখে সেভ করো।
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">🤖 AI Automation & Agentic Workflows</span>
+      </div>
+      <div class="form-group">
+        <label>Core Automation Tools & Platforms:</label>
+        <textarea id="skillsAutomation" rows="3">n8n, Make.com, OpenAI GPT-4o, Claude 3.5 Sonnet, LangChain, Custom Webhooks, REST APIs, Python Automation</textarea>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">📈 Meta Marketing & Performance Growth</span>
+      </div>
+      <div class="form-group">
+        <label>Meta Advertising & Conversion Tools:</label>
+        <textarea id="skillsMarketing" rows="3">Meta Ads Manager, Conversions API (CAPI), Meta Pixel, Google Tag Manager, Looker Studio, ROI Analytics</textarea>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">💻 Software & App Development</span>
+      </div>
+      <div class="form-group">
+        <label>Programming Languages, Frameworks & DBs:</label>
+        <textarea id="skillsDevelopment" rows="3">React, TypeScript, Node.js, Express, React Native, Supabase, PostgreSQL, Three.js 3D WebGL</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: RESUME & FILES -->
+  <div id="tab-resume" class="tab-pane">
+    <div class="helper-banner">
+      <span>📄</span>
+      <div>
+        <strong>রেজুমে কন্ট্রোল:</strong> পোর্টফোলিওতে "Click here to download it!" লিঙ্কে ক্লিক করলে যে ফাইলটি ডাউনলোড হয়, তা এখান থেকে দেখতে ও নিয়ন্ত্রণ করতে পারবে।
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">📎 Active Resume PDF Information</span>
+      </div>
+      <p style="font-size:13px; margin-bottom:12px;">
+        বর্তমানে সাইটে সক্রিয় রেজুমে ফাইল: <strong>Abdullah Karif Shahjada - Resume.pdf</strong>
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+        <a class="btn btn-primary" href="/Abdullah_Karif_Shahjada_Resume.pdf" target="_blank" download="Abdullah Karif Shahjada - Resume.pdf">
+          📥 Download Active Resume PDF
+        </a>
+        <a class="btn" href="/Abdullah_Karif_Shahjada_Resume.pdf" target="_blank">
+          👁️ Preview Resume In New Tab
+        </a>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">🌐 Custom Resume Download URL (Optional)</span>
+      </div>
+      <div class="form-group">
+        <label>External PDF Link (Google Drive / Cloudinary / Custom URL):</label>
+        <input type="text" id="customResumeUrl" placeholder="Leave empty to use built-in PDF or paste custom URL">
+        <span class="label-hint">খালি রাখলে সিস্টেমের ডিফল্ট পিডিএফটিই ডাউনলোড হবে।</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: CLIENT INQUIRIES & LEADS -->
+  <div id="tab-leads" class="tab-pane">
+    <div class="helper-banner">
+      <span>📬</span>
+      <div>
+        <strong>ক্লায়েন্ট লিডস ইনবক্স:</strong> ভিজিটর বা ক্লায়েন্টরা পোর্টফোলিওর "Contact" ফর্মে যেসব মেসেজ ও প্রজেক্ট ব্রিফিং পাঠাবে, সেগুলো সরাসরি এখানে জমা হবে।
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">Inbox Submissions</span>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn-sm" onclick="exportLeadsCSV()">📥 Export CSV (Excel)</button>
+          <button class="btn btn-sm" onclick="exportLeadsJSON()">📥 Export JSON</button>
+          <button class="btn btn-sm btn-danger" onclick="clearAllLeads()">🗑️ Clear Inbox</button>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <input type="text" id="leadSearchInput" placeholder="🔍 Search inquiries by client name, email, or message..." oninput="filterLeads(this.value)">
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 140px;">Date & Time</th>
+              <th style="width: 150px;">Client Name</th>
+              <th style="width: 180px;">Email</th>
+              <th style="width: 130px;">Company</th>
+              <th>Project Brief / Bottleneck</th>
+              <th style="width: 70px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: 3D ROOM & AUDIO CONTROLS -->
+  <div id="tab-audio3d" class="tab-pane">
+    <div class="helper-banner">
+      <span>🎛️</span>
+      <div>
+        <strong>3D রুম ও সাউন্ড টিউনিং:</strong> এখানে 3D রুমের মেকানিক্যাল কীবোর্ড ক্লিক সাউন্ড, ব্যাকগ্রাউন্ড অ্যাম্বিয়েন্স এবং 3D ক্যামেরা মোড সমন্বয় করতে পারবে।
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">🔊 Audio & Volume Levels</span>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Keyboard Typing Sound: <span id="kbVolLabel">100%</span></label>
+          <input type="range" id="kbVolRange" min="0" max="100" value="100" oninput="document.getElementById('kbVolLabel').innerText=this.value+'%'">
+        </div>
+        <div class="form-group">
+          <label>Ambient Room Sound: <span id="ambVolLabel">70%</span></label>
+          <input type="range" id="ambVolRange" min="0" max="100" value="70" oninput="document.getElementById('ambVolLabel').innerText=this.value+'%'">
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">💡 3D Environment & Dev Inspector</span>
+      </div>
+      <p style="font-size:13px; color:#444; margin-bottom:12px;">
+        Three.js লাইভ 3D রুমের ক্যামেরা কোঅর্ডিনেট, লাইট এবং শ্যাডো ফাইন-টিউন করতে লাইভ ডিবাগ মোড ব্যবহার করতে পারো:
+      </p>
+      <button class="btn btn-primary" onclick="window.open('/?debug#debug', '_blank')">
+        🚀 Launch 3D Room in Live Debug Mode (lil-gui)
+      </button>
+    </div>
+  </div>
+
+  <!-- TAB 7: SECURITY & BACKUP -->
+  <div id="tab-security" class="tab-pane">
+    <div class="helper-banner">
+      <span>🔒</span>
+      <div>
+        <strong>সিকিউরিটি ও ব্যাকআপ:</strong> তোমার অ্যাডমিন প্যানেলের মাস্টার পাসওয়ার্ড পরিবর্তন করো এবং পোর্টফোলিওর সম্পূর্ণ ডাটাবেস ব্যাকআপ হিসেবে সংরক্ষণ করো।
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">🔑 Change Master Administrator Password</span>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>New Password (নতুন পাসওয়ার্ড):</label>
+          <div style="display:flex; gap:4px;">
+            <input type="password" id="newMasterPwd" placeholder="Enter at least 4 characters">
+            <button class="btn btn-sm" type="button" onclick="togglePasswordVisibility('newMasterPwd')">👁️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password (নিশ্চিত করো):</label>
+          <input type="password" id="confirmMasterPwd" placeholder="Re-type new password">
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="changeMasterPassword()">Update Master Password</button>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">💾 Complete Database Backup & Restore</span>
+      </div>
+      <p style="font-size:13px; color:#444; margin-bottom:12px;">
+        তোমার সমস্ত প্রজেক্ট, স্কিলস এবং প্রোফাইল ডাটাবেস ১-ক্লিকে ব্যাকআপ ফাইল (.json) হিসেবে ডাউনলোড করে রাখতে পারো:
+      </p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+        <button class="btn" onclick="exportDatabaseJSON()">📥 Export JSON Backup</button>
+        <button class="btn" onclick="document.getElementById('importFileInput').click()">📤 Import JSON Backup</button>
+        <input type="file" id="importFileInput" style="display:none" accept=".json" onchange="importDatabaseJSON(event)">
+        <button class="btn btn-danger" onclick="resetToDefaults()">⚠️ Factory Reset All Data</button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="card-header">
+        <span class="card-title">📋 Raw JSON Database Inspector</span>
+      </div>
+      <textarea id="rawJsonPreview" rows="8" style="font-family:monospace; font-size:12px;" readonly></textarea>
+    </div>
+  </div>
+
+  <!-- TAB 8: HELP & USER GUIDE -->
+  <div id="tab-guide" class="tab-pane">
+    <div class="helper-banner">
+      <span>📖</span>
+      <div>
+        <strong>অ্যাডমিন প্যানেল ব্যবহার নির্দেশিকা:</strong> কীভাবে সহজেই পোর্টফোলিও কন্ট্রোল করবে তা নিচে সহজ বাংলায় বুঝিয়ে দেওয়া হলো।
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h3 style="color:var(--win-navy); font-size:14px; margin-bottom:10px;">১. অ্যাডমিন প্যানেলে কীভাবে ঢুকবে?</h3>
+      <ul style="padding-left:20px; line-height:1.7; font-size:13px;">
+        <li>ওয়েবসাইটের যেকোনো স্থানে থাকা অবস্থায় কীবোর্ড থেকে <strong><code>Ctrl + Shift + A</code></strong> চাপো।</li>
+        <li>একটি পাসওয়ার্ড প্রম্পট আসবে। সেখানে তোমার মাস্টার পাসওয়ার্ড (ডিফল্ট: <code>1234</code>) দিয়ে এন্টার চাপলে প্যানেল খুলে যাবে।</li>
+        <li>সরাসরি ব্রাউজারের অ্যাড্রেস বারে <strong><code>http://localhost:3000/admin.html</code></strong> লিখেও প্রবেশ করতে পারবে।</li>
+      </ul>
+    </div>
+
+    <div class="section-card">
+      <h3 style="color:var(--win-navy); font-size:14px; margin-bottom:10px;">২. কীভাবে নতুন প্রজেক্ট অ্যাড করবে?</h3>
+      <ul style="padding-left:20px; line-height:1.7; font-size:13px;">
+        <li><strong>Projects Manager</strong> ট্যাবে যাও।</li>
+        <li><strong>"+ Add New Project"</strong> বাটনে ক্লিক করো।</li>
+        <li>প্রজেক্টের নাম, ক্যাটাগরি, টেক স্ট্যাক এবং বিবরণ লিখে নিচের সবুজ <strong>"Save Changes to Database"</strong> বাটনে চাপ দাও।</li>
+        <li>মুহূর্তেই তোমার পোর্টফোলিওতে নতুন প্রজেক্ট লাইভ হয়ে যাবে!</li>
+      </ul>
+    </div>
+
+    <div class="section-card">
+      <h3 style="color:var(--win-navy); font-size:14px; margin-bottom:10px;">৩. ক্লায়েন্টদের মেসেজ কীভাবে দেখবে?</h3>
+      <ul style="padding-left:20px; line-height:1.7; font-size:13px;">
+        <li><strong>Client Inquiries</strong> ট্যাবে ক্লিক করো।</li>
+        <li>কন্ট্যাক্ট ফর্মে কোনো ক্লায়েন্ট মেসেজ পাঠালে তা এখানে তারিখ ও সময়সহ তালিকা আকারে দেখতে পাবে।</li>
+        <li><strong>"Export CSV (Excel)"</strong> বাটনে চাপ দিলে সব ক্লায়েন্টের তথ্য এক্সেল শিট আকারে ডাউনলোড হয়ে যাবে।</li>
+      </ul>
+    </div>
+
+    <div class="section-card">
+      <h3 style="color:var(--win-navy); font-size:14px; margin-bottom:10px;">৪. পাসওয়ার্ড পরিবর্তন ও নিরাপত্তা:</h3>
+      <ul style="padding-left:20px; line-height:1.7; font-size:13px;">
+        <li><strong>Password & Backup</strong> ট্যাবে গিয়ে তোমার নতুন পাসওয়ার্ড সেট করতে পারবে।</li>
+        <li>কাজ শেষে উপরে বা নিচে থাকা <strong>"🔒 Lock Station"</strong> বাটনে ক্লিক করলে অ্যাডমিন স্টেশন সাথে সাথে লক হয়ে যাবে।</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom Action Bar -->
+  <div class="action-bar">
+    <div style="display:flex; gap:8px;">
+      <button class="btn" onclick="window.location.href='/'">⬅️ View 3D Portfolio</button>
+      <button class="btn" onclick="logoutAdmin()">🔒 Lock Station</button>
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <span id="saveStatus" style="font-size:12px; color:#006600; font-weight:bold; display:none;">✓ All changes in sync</span>
+      <button class="btn btn-success" onclick="saveAllChanges()" style="padding: 7px 22px; font-size:13px;">
+        💾 Save Changes to Database
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Popup Notification -->
+<div id="toastNotice">
+  <span id="toastIcon">✅</span>
+  <span id="toastMsg">Changes saved successfully!</span>
+</div>
+
+<script>
+  const STORAGE_KEY = 'folio_admin_database';
+  const PWD_KEY = 'folio_admin_pwd';
+  const LEADS_KEY = 'folio_client_leads';
+
+  let currentData = {
+    profile: {
+      name: "Abdullah Karif Shahjada",
+      headline: "AI Automation",
+      subHeadline: "AI Automation Specialist, App & Web Developer, Meta Marketing Expert",
+      institution: "As-Sunnah Skill Development Institute (1st Batch)",
+      courseYear: "2026",
+      certification: "Professional AI Automation Course (1st Batch)",
+      email: "hellokarvionlabs@gmail.com",
+      whatsapp: "+880 1884-636312",
+      bio: "AI Automation Specialist specializing in building intelligent automated workflows and social media automation systems, software/app development, and Meta marketing."
+    },
+    skills: {
+      automation: "n8n, Make.com, OpenAI GPT-4o, Claude 3.5 Sonnet, LangChain, Custom Webhooks, REST APIs, Python Automation",
+      marketing: "Meta Ads Manager, Conversions API (CAPI), Meta Pixel, Google Tag Manager, Looker Studio, ROI Analytics",
+      development: "React, TypeScript, Node.js, Express, React Native, Supabase, PostgreSQL, Three.js 3D WebGL"
+    },
+    projects: [
+      {
+        id: "proj-1",
+        title: "Autonomous Inbound Lead Routing & Follow-up Agent",
+        category: "AI Automation",
+        description: "Captured Meta ad leads in under 2 seconds, validated their profile using AI reasoning, assigned lead score, and initiated an automated personalized WhatsApp conversation, lifting conversion rates by 42%.",
+        tech: "n8n, OpenAI GPT-4o, Meta Ads API, HubSpot CRM, WhatsApp API"
+      },
+      {
+        id: "proj-2",
+        title: "Custom E-Commerce & Service Web Application",
+        category: "Development",
+        description: "Full-stack responsive web application featuring custom ordering workflows, payment gateway synchronization, and automated inventory reconciliation.",
+        tech: "React, TypeScript, Node.js, Stripe, Supabase"
+      },
+      {
+        id: "proj-3",
+        title: "Cross-Platform Mobile Client Portal App",
+        category: "App Development",
+        description: "Engineered an intuitive mobile application for client onboarding, real-time ticket tracking, and automated status alerts.",
+        tech: "React Native / Mobile UI, REST APIs, Push Notifications"
+      },
+      {
+        id: "proj-4",
+        title: "Meta Performance Marketing Funnel Engine",
+        category: "Meta Marketing",
+        description: "End-to-end performance marketing setup combining hyper-targeted audience segments, dynamic retargeting, and automated ROI analytics dashboards.",
+        tech: "Meta Pixel, CAPI (Conversions API), Google Tag Manager, Looker Studio"
+      }
+    ],
+    systemSettings: {
+      keyboardVolume: 100,
+      ambientVolume: 70,
+      sunlight: "warm",
+      cameraMode: "fixed"
+    },
+    customResumeUrl: ""
+  };
+
+  let failAttempts = 0;
+
+  // Real-time Clock
+  function updateClock() {
+    const el = document.getElementById('liveClock');
+    if (el) el.innerText = new Date().toLocaleTimeString();
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  function checkSessionAuth() {
+    if (sessionStorage.getItem('folio_admin_authed') === 'true') {
+      document.getElementById('authOverlay').style.display = 'none';
+      document.getElementById('mainAdminWindow').style.display = 'block';
+    } else {
+      document.getElementById('authOverlay').style.display = 'flex';
+      document.getElementById('mainAdminWindow').style.display = 'none';
+      setTimeout(() => {
+        document.getElementById('authPwdInput')?.focus();
+      }, 100);
+    }
+  }
+
+  function verifyLogin() {
+    if (failAttempts >= 5) {
+      alert("⚠️ Too many failed attempts. Please wait 15 seconds.");
+      return;
+    }
+    const input = document.getElementById('authPwdInput').value;
+    const storedPwd = localStorage.getItem(PWD_KEY) || '1234';
+    if (input === storedPwd) {
+      sessionStorage.setItem('folio_admin_authed', 'true');
+      document.getElementById('authOverlay').style.display = 'none';
+      document.getElementById('mainAdminWindow').style.display = 'block';
+      failAttempts = 0;
+      showToast("🛡️ Administrator Station Unlocked", "🔑");
+    } else {
+      failAttempts++;
+      document.getElementById('authError').style.display = 'block';
+      document.getElementById('authPwdInput').value = '';
+      document.getElementById('authPwdInput').focus();
+    }
+  }
+
+  function logoutAdmin() {
+    sessionStorage.removeItem('folio_admin_authed');
+    window.location.href = '/';
+  }
+
+  function togglePasswordVisibility(id) {
+    const el = document.getElementById(id);
+    if (el) el.type = el.type === 'password' ? 'text' : 'password';
+  }
+
+  function changeMasterPassword() {
+    const newPwd = document.getElementById('newMasterPwd').value;
+    const confirmPwd = document.getElementById('confirmMasterPwd').value;
+    if (!newPwd || newPwd.trim().length < 4) {
+      alert("পাসওয়ার্ড অবশ্যই কমপক্ষে ৪ অক্ষরের হতে হবে!");
+      return;
+    }
+    if (newPwd !== confirmPwd) {
+      alert("দুই ঘরের পাসওয়ার্ড এক হয়নি! অনুগ্রহ করে আবার চেক করুন।");
+      return;
+    }
+    localStorage.setItem(PWD_KEY, newPwd.trim());
+    document.getElementById('newMasterPwd').value = '';
+    document.getElementById('confirmMasterPwd').value = '';
+    showToast("✅ Master Password Updated Successfully!", "🔒");
+  }
+
+  function init() {
+    checkSessionAuth();
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        currentData = Object.assign({}, currentData, parsed);
+      } catch (e) {
+        console.error("Failed to parse saved database:", e);
+      }
+    }
+    loadToUI();
+    renderLeads();
+  }
+
+  function loadToUI() {
+    document.getElementById('profName').value = currentData.profile.name || '';
+    document.getElementById('profHeadline').value = currentData.profile.headline || '';
+    document.getElementById('profSubHeadline').value = currentData.profile.subHeadline || '';
+    document.getElementById('profInstitution').value = currentData.profile.institution || '';
+    document.getElementById('profCourseYear').value = currentData.profile.courseYear || '';
+    document.getElementById('profCertification').value = currentData.profile.certification || '';
+    document.getElementById('profEmail').value = currentData.profile.email || '';
+    document.getElementById('profWhatsApp').value = currentData.profile.whatsapp || '+880 1884-636312';
+    document.getElementById('profBio').value = currentData.profile.bio || '';
+
+    document.getElementById('skillsAutomation').value = currentData.skills.automation || '';
+    document.getElementById('skillsMarketing').value = currentData.skills.marketing || '';
+    document.getElementById('skillsDevelopment').value = currentData.skills.development || '';
+
+    if (currentData.systemSettings) {
+      document.getElementById('kbVolRange').value = currentData.systemSettings.keyboardVolume ?? 100;
+      document.getElementById('kbVolLabel').innerText = (currentData.systemSettings.keyboardVolume ?? 100) + '%';
+      document.getElementById('ambVolRange').value = currentData.systemSettings.ambientVolume ?? 70;
+      document.getElementById('ambVolLabel').innerText = (currentData.systemSettings.ambientVolume ?? 70) + '%';
+    }
+
+    document.getElementById('customResumeUrl').value = currentData.customResumeUrl || '';
+
+    renderProjects();
+    updateRawJsonPreview();
+  }
+
+  function updateRawJsonPreview() {
+    const el = document.getElementById('rawJsonPreview');
+    if (el) el.value = JSON.stringify(currentData, null, 2);
+  }
+
+  function renderProjects() {
+    const container = document.getElementById('projectsList');
+    container.innerHTML = '';
+    document.getElementById('projectsCountLabel').innerText = currentData.projects.length;
+
+    currentData.projects.forEach((proj, idx) => {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.innerHTML = `
+        <div class="project-header-bar">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="project-badge">#${idx + 1}</span>
+            <input type="text" value="${escapeHtml(proj.title)}" onchange="updateProjectField(${idx}, 'title', this.value)" style="font-weight:bold; font-size:13px; width:360px;">
+          </div>
+          <div style="display:flex; gap:4px;">
+            <button class="btn btn-sm" onclick="moveProject(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} title="Move Up">▲</button>
+            <button class="btn btn-sm" onclick="moveProject(${idx}, 1)" ${idx === currentData.projects.length - 1 ? 'disabled' : ''} title="Move Down">▼</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteProject(${idx})" title="Delete Project">✕ Delete</button>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:8px;">
+          <div>
+            <label style="font-size:11px;">Category / Tag:</label>
+            <input type="text" value="${escapeHtml(proj.category || 'AI Automation')}" onchange="updateProjectField(${idx}, 'category', this.value)">
+          </div>
+          <div>
+            <label style="font-size:11px;">Tech Stack (comma separated):</label>
+            <input type="text" value="${escapeHtml(proj.tech || '')}" onchange="updateProjectField(${idx}, 'tech', this.value)">
+          </div>
+        </div>
+        <div style="margin-top:8px;">
+          <label style="font-size:11px;">Description & Achieved Impact:</label>
+          <textarea rows="2" onchange="updateProjectField(${idx}, 'description', this.value)">${escapeHtml(proj.description || '')}</textarea>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function updateProjectField(idx, field, value) {
+    if (currentData.projects[idx]) {
+      currentData.projects[idx][field] = value;
+      updateRawJsonPreview();
+    }
+  }
+
+  function moveProject(idx, direction) {
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= currentData.projects.length) return;
+    const temp = currentData.projects[idx];
+    currentData.projects[idx] = currentData.projects[targetIdx];
+    currentData.projects[targetIdx] = temp;
+    renderProjects();
+    showToast("Project order updated", "↕️");
+  }
+
+  function addNewProject() {
+    currentData.projects.unshift({
+      id: "proj-" + Date.now(),
+      title: "New Featured Automation Project",
+      category: "AI Automation",
+      description: "End-to-end intelligent pipeline streamlining operations and maximizing business ROI.",
+      tech: "n8n, Python, OpenAI GPT-4o, Webhooks"
+    });
+    renderProjects();
+    showToast("New project added to top of list!", "✨");
+  }
+
+  function deleteProject(idx) {
+    if (confirm(`Are you sure you want to delete "${currentData.projects[idx]?.title}"?`)) {
+      currentData.projects.splice(idx, 1);
+      renderProjects();
+      showToast("Project removed", "🗑️");
+    }
+  }
+
+  function renderLeads(filterText = '') {
+    const leads = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]');
+    document.getElementById('leadsBadge').innerText = leads.length;
+    const tbody = document.getElementById('leadsTableBody');
+    tbody.innerHTML = '';
+
+    const filtered = leads.filter(l => {
+      if (!filterText) return true;
+      const q = filterText.toLowerCase();
+      return (l.name || '').toLowerCase().includes(q) ||
+             (l.email || '').toLowerCase().includes(q) ||
+             (l.message || '').toLowerCase().includes(q) ||
+             (l.company || '').toLowerCase().includes(q);
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#777; padding:20px;">No client inquiries found. When visitors submit the Contact form, their submissions appear here in real-time.</td></tr>';
+      return;
+    }
+
+    filtered.forEach((l, idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-size:11px; color:#555;">${escapeHtml(l.date || 'N/A')}</td>
+        <td style="font-weight:bold; color:var(--win-navy);">${escapeHtml(l.name || 'Anonymous')}</td>
+        <td><a href="mailto:${escapeHtml(l.email)}" style="color:#000080;">${escapeHtml(l.email || 'N/A')}</a></td>
+        <td>${escapeHtml(l.company || '-')}</td>
+        <td style="line-height:1.4;">${escapeHtml(l.message || '')}</td>
+        <td>
+          <button class="btn btn-sm btn-danger" onclick="deleteLead(${l.id || idx})" title="Delete inquiry">✕</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function filterLeads(query) {
+    renderLeads(query);
+  }
+
+  function deleteLead(idOrIdx) {
+    let leads = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]');
+    leads = leads.filter((l, idx) => (l.id ? l.id !== idOrIdx : idx !== idOrIdx));
+    localStorage.setItem(LEADS_KEY, JSON.stringify(leads));
+    renderLeads();
+    showToast("Inquiry deleted from inbox", "🗑️");
+  }
+
+  function clearAllLeads() {
+    if (confirm("Are you sure you want to permanently clear all inquiries from inbox?")) {
+      localStorage.removeItem(LEADS_KEY);
+      renderLeads();
+      showToast("All inquiries cleared", "🗑️");
+    }
+  }
+
+  function exportLeadsCSV() {
+    const leads = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]');
+    if (leads.length === 0) {
+      alert("No leads to export!");
+      return;
+    }
+    let csv = "Date,Name,Email,Company,Message\n";
+    leads.forEach(l => {
+      csv += `"${l.date}","${(l.name||'').replace(/"/g, '""')}","${(l.email||'').replace(/"/g, '""')}","${(l.company||'').replace(/"/g, '""')}","${(l.message||'').replace(/"/g, '""')}"\n`;
+    });
+    downloadBlob(csv, `client-leads-${Date.now()}.csv`, 'text/csv;charset=utf-8;');
+  }
+
+  function exportLeadsJSON() {
+    const leads = JSON.parse(localStorage.getItem(LEADS_KEY) || '[]');
+    downloadBlob(JSON.stringify(leads, null, 2), `client-leads-${Date.now()}.json`, 'application/json');
+  }
+
+  function switchTab(tabName, btnElement) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(c => c.classList.remove('active'));
+
+    btnElement.classList.add('active');
+    const target = document.getElementById('tab-' + tabName);
+    if (target) target.classList.add('active');
+
+    if (tabName === 'leads') renderLeads();
+    if (tabName === 'security') updateRawJsonPreview();
+  }
+
+  function showToast(msg, icon = '✅') {
+    const toast = document.getElementById('toastNotice');
+    document.getElementById('toastMsg').innerText = msg;
+    document.getElementById('toastIcon').innerText = icon;
+    toast.style.display = 'flex';
+    clearTimeout(toast.timeoutId);
+    toast.timeoutId = setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3500);
+  }
+
+  function saveAllChanges() {
+    currentData.profile.name = document.getElementById('profName').value;
+    currentData.profile.headline = document.getElementById('profHeadline').value;
+    currentData.profile.subHeadline = document.getElementById('profSubHeadline').value;
+    currentData.profile.institution = document.getElementById('profInstitution').value;
+    currentData.profile.courseYear = document.getElementById('profCourseYear').value;
+    currentData.profile.certification = document.getElementById('profCertification').value;
+    currentData.profile.email = document.getElementById('profEmail').value;
+    currentData.profile.whatsapp = document.getElementById('profWhatsApp').value;
+    currentData.profile.bio = document.getElementById('profBio').value;
+
+    currentData.skills.automation = document.getElementById('skillsAutomation').value;
+    currentData.skills.marketing = document.getElementById('skillsMarketing').value;
+    currentData.skills.development = document.getElementById('skillsDevelopment').value;
+
+    currentData.systemSettings = {
+      keyboardVolume: parseInt(document.getElementById('kbVolRange').value),
+      ambientVolume: parseInt(document.getElementById('ambVolRange').value)
+    };
+
+    currentData.customResumeUrl = document.getElementById('customResumeUrl').value;
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentData));
+    updateRawJsonPreview();
+    showToast("Settings & Projects saved to live database!", "💾");
+  }
+
+  function exportDatabaseJSON() {
+    saveAllChanges();
+    const jsonStr = JSON.stringify(currentData, null, 2);
+    downloadBlob(jsonStr, `portfolio-database-backup-${new Date().toISOString().slice(0,10)}.json`, 'application/json');
+    showToast("Database backup downloaded successfully!", "📥");
+  }
+
+  function importDatabaseJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        currentData = Object.assign({}, currentData, imported);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(currentData));
+        loadToUI();
+        showToast("Database restored successfully!", "📤");
+      } catch (err) {
+        alert("Invalid JSON backup file!");
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  function resetToDefaults() {
+    if (confirm("⚠️ Are you sure you want to reset all portfolio data back to initial defaults?")) {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+  }
+
+  function downloadBlob(content, filename, contentType) {
+    const blob = new Blob([content], { type: contentType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function escapeHtml(text) {
+    return (text || '').toString()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  window.onload = init;
+</script>
+</body>
+</html>

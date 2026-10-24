@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+*/node_modules/
+*/*/node_modules/
+
+# Build and cache outputs (keep public/inner which is the production runtime build)
+dist/
+temp-inner-site/build/
+.cache/
+.temp/
+
+# Environment and sensitive keys
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

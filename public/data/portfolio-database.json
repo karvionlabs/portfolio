@@ -1,0 +1,72 @@
+{
+  "profile": {
+    "name": "Abdullah Karif Shahjada",
+    "headline": "AI Automation",
+    "subHeadline": "AI Automation Specialist, App & Web Developer, Meta Marketing Expert",
+    "email": "contact@abdullahkarif.com",
+    "location": "Bangladesh",
+    "institution": "As-Sunnah Skill Development Institute (আস-সুন্নাহ স্কিল ডেভেলপমেন্ট ইনস্টিটিউট)",
+    "courseYear": "2026",
+    "certification": "Professional AI Automation Certification",
+    "bio": "Specializing in Autonomous AI Workflows, Agentic Systems, App & Web Development, and Meta Performance Marketing. Certified from As-Sunnah Skill Development Institute in 2026.",
+    "topOverlay": {
+      "line1": "Abdullah Karif Shahjada",
+      "line2": "AI Automation"
+    }
+  },
+  "skills": {
+    "aiAutomation": [
+      "Make.com & Integromat",
+      "n8n Workflow Automation",
+      "LangChain & LangGraph",
+      "Model Context Protocol (MCP)",
+      "OpenAI & Claude API Integration",
+      "Zapier & Custom Webhooks",
+      "Python Automation Scripts"
+    ],
+    "metaMarketing": [
+      "Meta Ads Campaign Architecture",
+      "Pixel & Conversions API (CAPI)",
+      "High-ROAS Audience Retargeting",
+      "Lead Generation AI Funnels"
+    ],
+    "development": [
+      "React & Next.js",
+      "TypeScript & JavaScript",
+      "Node.js & Express API",
+      "Mobile App Development",
+      "Three.js & WebGL 3D"
+    ]
+  },
+  "projects": [
+    {
+      "id": "proj-1",
+      "title": "Autonomous AI Multi-Agent Customer Support",
+      "category": "AI Automation",
+      "description": "Enterprise automated customer agent using Claude 3.5 and n8n with CRM syncing, sentiment analysis, and instant email dispatch.",
+      "techStack": ["n8n", "Claude API", "Python", "PostgreSQL", "Webhooks"],
+      "link": "https://github.com/abdullahkarif/ai-support-agent"
+    },
+    {
+      "id": "proj-2",
+      "title": "Meta Ads High-ROAS Automation Engine",
+      "category": "Meta Marketing",
+      "description": "Automated ad management pipeline connecting Meta Graph API with real-time conversion feedback to optimize ad sets dynamically.",
+      "techStack": ["Meta Ads API", "Python", "Google Sheets API", "Make.com"],
+      "link": "https://github.com/abdullahkarif/meta-ads-engine"
+    },
+    {
+      "id": "proj-3",
+      "title": "Cross-Platform Delivery Mobile & Web App",
+      "category": "Development",
+      "description": "Full-stack real-time tracking application with reactive interface, payment gateway, and SMS alert automation.",
+      "techStack": ["React", "TypeScript", "Node.js", "Express", "TailwindCSS"],
+      "link": "https://github.com/abdullahkarif/delivery-platform"
+    }
+  ],
+  "systemSettings": {
+    "enable3DDebug": false,
+    "soundVolume": 0.8,
+    "theme": "retro-teal"
+  }
+}
