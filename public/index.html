@@ -13,20 +13,21 @@
     #ui-interactive{position:absolute;top:0;left:0;width:auto;pointer-events:auto}
     video{position:absolute;top:0;pointer-events:none}
 
-    /* Modern Floating Social Dock (Top-Right) */
+    /* Modern Floating Social Dock (Top-Right Vertical Stack) */
     .social-dock-container {
       position: fixed;
       top: 22px;
       right: 24px;
       z-index: 999999;
       display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 10px;
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 6px 10px;
-      border-radius: 40px;
+      padding: 8px 6px;
+      border-radius: 30px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
       border: 1.5px solid rgba(255, 255, 255, 0.85);
       pointer-events: auto !important;
@@ -53,7 +54,18 @@
     .social-dock-btn:hover {
       transform: scale(1.12);
       filter: brightness(1.08);
+    }
+    .facebook-btn {
+      background: #1877F2;
+    }
+    .facebook-btn:hover {
       box-shadow: 0 5px 14px rgba(24, 119, 242, 0.45);
+    }
+    .youtube-btn {
+      background: #FF0000;
+    }
+    .youtube-btn:hover {
+      box-shadow: 0 5px 14px rgba(255, 0, 0, 0.5);
     }
     .social-dock-btn svg {
       width: 20px;
@@ -62,14 +74,12 @@
       display: block;
       pointer-events: none;
     }
-    .facebook-btn {
-      background: #1877F2;
-    }
     @media only screen and (max-width: 768px) {
       .social-dock-container {
         top: 16px;
         right: 16px;
-        padding: 5px 8px;
+        padding: 6px 5px;
+        gap: 8px;
       }
       .social-dock-btn {
         width: 32px;
@@ -103,11 +113,16 @@
   </script>
 </head>
 <body>
-  <!-- Modern Floating Social Dock (Top-Right) -->
+  <!-- Modern Floating Social Dock (Top-Right Vertical Stack) -->
   <div id="social-dock" class="social-dock-container" aria-label="Social Media Links">
     <a href="https://www.facebook.com/profile.php?id=61593837111806" target="_blank" rel="noopener noreferrer" class="social-dock-btn facebook-btn" title="Facebook - Abdullah Karif Shahjada">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/>
+      </svg>
+    </a>
+    <a href="https://www.youtube.com/@karvionlabs" target="_blank" rel="noopener noreferrer" class="social-dock-btn youtube-btn" title="YouTube - @karvionlabs">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m10 15 5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73Z"/>
       </svg>
     </a>
   </div>
