@@ -8,6 +8,7 @@ dist/
 temp-inner-site/build/
 .cache/
 .temp/
+*.zip
 
 # Environment and sensitive keys
 .env

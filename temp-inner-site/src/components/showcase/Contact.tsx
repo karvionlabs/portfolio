@@ -49,6 +49,7 @@ const Contact: React.FC<ContactProps> = (props) => {
                     <ul style={{ margin: '12px 0 16px 20px', lineHeight: 1.8 }}>
                         <li><strong>Email:</strong> <a href="mailto:hellokarvionlabs@gmail.com">hellokarvionlabs@gmail.com</a></li>
                         <li><strong>WhatsApp:</strong> <a href="https://wa.me/8801884636312" target="_blank" rel="noreferrer">+880 1884-636312 (01884636312)</a></li>
+                        <li><strong>Facebook Page:</strong> <a href="https://www.facebook.com/profile.php?id=61593837111806" target="_blank" rel="noreferrer">Abdullah Karif Shahjada (Official Page)</a></li>
                         <li><strong>Karvion Labs:</strong> Founder & Tech Content Creator</li>
                     </ul>
                     <form onSubmit={handleSubmit} style={styles.form}>

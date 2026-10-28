@@ -12,6 +12,74 @@
     #css{cursor:pointer}
     #ui-interactive{position:absolute;top:0;left:0;width:auto;pointer-events:auto}
     video{position:absolute;top:0;pointer-events:none}
+
+    /* Modern Floating Social Dock (Top-Right) */
+    .social-dock-container {
+      position: fixed;
+      top: 22px;
+      right: 24px;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 6px 10px;
+      border-radius: 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      pointer-events: auto !important;
+      user-select: none;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    }
+    .social-dock-container:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      transform: translateY(-1px);
+    }
+    .social-dock-btn {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    }
+    .social-dock-btn:hover {
+      transform: scale(1.12);
+      filter: brightness(1.08);
+      box-shadow: 0 5px 14px rgba(24, 119, 242, 0.45);
+    }
+    .social-dock-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
+      display: block;
+      pointer-events: none;
+    }
+    .facebook-btn {
+      background: #1877F2;
+    }
+    @media only screen and (max-width: 768px) {
+      .social-dock-container {
+        top: 16px;
+        right: 16px;
+        padding: 5px 8px;
+      }
+      .social-dock-btn {
+        width: 32px;
+        height: 32px;
+      }
+      .social-dock-btn svg {
+        width: 17px;
+        height: 17px;
+      }
+    }
   </style>
   <title>Abdullah Karif Shahjada - AI Automation Portfolio</title>
   <meta name="description" content="Abdullah Karif Shahjada - AI Automation Specialist, App Developer, Web Developer & Meta Marketing Expert. Certified in Professional AI Automation from As-Sunnah Skill Development Institute (2026).">
@@ -35,6 +103,15 @@
   </script>
 </head>
 <body>
+  <!-- Modern Floating Social Dock (Top-Right) -->
+  <div id="social-dock" class="social-dock-container" aria-label="Social Media Links">
+    <a href="https://www.facebook.com/profile.php?id=61593837111806" target="_blank" rel="noopener noreferrer" class="social-dock-btn facebook-btn" title="Facebook - Abdullah Karif Shahjada">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/>
+      </svg>
+    </a>
+  </div>
+
   <div id="css"></div>
   <div id="webgl"></div>
   <div id="overlay"></div>
