@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ResumeDownload from './ResumeDownload';
+import me from '../../assets/pictures/karif.jpg';
 
 export interface AboutProps {}
 
@@ -52,9 +53,34 @@ const About: React.FC<AboutProps> = (props) => {
             <div className="text-block">
                 <h3>Karvion Labs & Content Creation</h3>
                 <br />
-                <p>
-                    In addition to my development and automation work, I am the <strong>Founder of Karvion Labs</strong>. Through Karvion Labs, I regularly create and publish educational and insightful video content on YouTube and Facebook. My goal with this platform is to share practical knowledge about AI tools, modern automation techniques, software development, and digital growth strategies with a wider community.
-                </p>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 24, flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, minWidth: 260 }}>
+                        <p>
+                            In addition to my development and automation work, I am the <strong>Founder of Karvion Labs</strong>. Through Karvion Labs, I regularly create and publish educational and insightful video content on YouTube and Facebook. My goal with this platform is to share practical knowledge about AI tools, modern automation techniques, software development, and digital growth strategies with a wider community.
+                        </p>
+                        <br />
+                        <p>
+                            My vision with Karvion Labs is to bridge the gap between complex artificial intelligence research and practical daily workflows, empowering freelancers, businesses, and developers to scale their operations 10x faster with autonomous AI agents.
+                        </p>
+                    </div>
+                    <div style={{ width: 220, minWidth: 190, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <img
+                            src={me}
+                            alt="Abdullah Karif Shahjada"
+                            style={{
+                                width: '100%',
+                                borderRadius: 4,
+                                border: '1px solid #d0d0d0',
+                                boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
+                            }}
+                        />
+                        <p style={{ marginTop: 8, textAlign: 'center' }}>
+                            <sub>
+                                <b>Figure 1:</b> Abdullah Karif Shahjada, 2026
+                            </sub>
+                        </p>
+                    </div>
+                </div>
                 <br />
                 <p>
                     Thanks for reading about me! I hope that you enjoy exploring the rest of my portfolio website and everything it has to offer.
