@@ -1,8 +1,9 @@
 {
   "files": {
     "main.css": "./static/css/main.22d0a6ca.css",
-    "main.js": "./static/js/main.3ec72936.js",
+    "main.js": "./static/js/main.d6b73386.js",
     "static/js/787.749b4a44.chunk.js": "./static/js/787.749b4a44.chunk.js",
+    "static/media/automation_session.jpg": "./static/media/automation_session.1382d7d3eb22886b6f17.jpg",
     "static/media/MSSansSerif.ttf": "./static/media/MSSansSerif.aa14e7b110864a3c2e08.ttf",
     "static/media/karif.jpg": "./static/media/karif.c480c7da55f80d8b2a40.jpg",
     "static/media/Abdullah_Karif_Shahjada_Resume.pdf": "./static/media/Abdullah_Karif_Shahjada_Resume.f1d21da44cb1a75275ac.pdf",
@@ -14,11 +15,11 @@
     "static/media/Millennium-Bold.ttf": "./static/media/Millennium-Bold.cd5e3be832ebd008c852.ttf",
     "index.html": "./index.html",
     "main.22d0a6ca.css.map": "./static/css/main.22d0a6ca.css.map",
-    "main.3ec72936.js.map": "./static/js/main.3ec72936.js.map",
+    "main.d6b73386.js.map": "./static/js/main.d6b73386.js.map",
     "787.749b4a44.chunk.js.map": "./static/js/787.749b4a44.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.22d0a6ca.css",
-    "static/js/main.3ec72936.js"
+    "static/js/main.d6b73386.js"
   ]
 }

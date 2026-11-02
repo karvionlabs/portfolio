@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ResumeDownload from './ResumeDownload';
-import me from '../../assets/pictures/karif.jpg';
+import portraitPic from '../../assets/pictures/karif.jpg';
+import automationSessionPic from '../../assets/pictures/automation_session.jpg';
 
 export interface AboutProps {}
 
@@ -26,17 +27,34 @@ const About: React.FC<AboutProps> = (props) => {
             <div className="text-block">
                 <h3>About Me</h3>
                 <br />
-                <p>
-                    My journey into technology started with a strong curiosity about how digital systems operate and how repetitive tasks can be simplified through smart technology. This passion naturally led me to specialize in <strong>AI Automation</strong>, where I design and implement seamless automated workflows that save time and scale business operations efficiently.
-                </p>
-                <br />
-                <p>
-                    To establish a strong professional foundation in this rapidly evolving field, I enrolled in the <strong>1st Batch</strong> of the <strong>Professional AI Automation Course</strong> at the <strong>As-Sunnah Skill Development Institute</strong> and graduated in <strong>2026</strong>. Through hands-on projects, I mastered advanced social media automation, custom AI agent integration, and end-to-end business process automation.
-                </p>
-                <br />
-                <p>
-                    Beyond AI automation, I have developed a versatile skill set across multiple digital domains:
-                </p>
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 24, flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, minWidth: 260 }}>
+                        <p>
+                            My journey into technology started with a strong curiosity about how digital systems operate and how repetitive tasks can be simplified through smart technology. This passion naturally led me to specialize in <strong>AI Automation</strong>, where I design and implement seamless automated workflows that save time and scale business operations efficiently.
+                        </p>
+                        <br />
+                        <p>
+                            To establish a strong professional foundation in this rapidly evolving field, I enrolled in the <strong>1st Batch</strong> of the <strong>Professional AI Automation Course</strong> at the <strong>As-Sunnah Skill Development Institute</strong> and graduated in <strong>2026</strong>. Through hands-on projects, I mastered advanced social media automation, custom AI agent integration, and end-to-end business process automation.
+                        </p>
+                    </div>
+                    <div style={{ width: 190, minWidth: 160, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <img
+                            src={portraitPic}
+                            alt="Abdullah Karif Shahjada"
+                            style={{
+                                width: '100%',
+                                borderRadius: 4,
+                                border: '1px solid #d0d0d0',
+                                boxShadow: '0 4px 14px rgba(0, 0, 0, 0.16)',
+                            }}
+                        />
+                        <p style={{ marginTop: 8, textAlign: 'center' }}>
+                            <sub>
+                                <b>Figure 1:</b> Abdullah Karif Shahjada
+                            </sub>
+                        </p>
+                    </div>
+                </div>
                 <br />
                 <ul>
                     <li style={{ marginBottom: 8 }}>
@@ -51,22 +69,22 @@ const About: React.FC<AboutProps> = (props) => {
                 </ul>
             </div>
             <div className="text-block">
-                <h3>Karvion Labs & Content Creation</h3>
+                <h3>Karvion Labs & Automation Future Journey</h3>
                 <br />
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: 24, flexWrap: 'wrap' }}>
                     <div style={{ flex: 1, minWidth: 260 }}>
                         <p>
-                            In addition to my development and automation work, I am the <strong>Founder of Karvion Labs</strong>. Through Karvion Labs, I regularly create and publish educational and insightful video content on YouTube and Facebook. My goal with this platform is to share practical knowledge about AI tools, modern automation techniques, software development, and digital growth strategies with a wider community.
+                            In addition to my development and automation work, I am the <strong>Founder of Karvion Labs</strong>. Through Karvion Labs, I actively conduct hands-on training sessions and workshops on AI tools, automation systems, and future technology to empower the next generation of builders.
                         </p>
                         <br />
                         <p>
                             My vision with Karvion Labs is to bridge the gap between complex artificial intelligence research and practical daily workflows, empowering freelancers, businesses, and developers to scale their operations 10x faster with autonomous AI agents.
                         </p>
                     </div>
-                    <div style={{ width: 220, minWidth: 190, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ width: 280, minWidth: 220, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <img
-                            src={me}
-                            alt="Abdullah Karif Shahjada"
+                            src={automationSessionPic}
+                            alt="Abdullah Karif Shahjada - AI Automation Session"
                             style={{
                                 width: '100%',
                                 borderRadius: 4,
@@ -76,7 +94,7 @@ const About: React.FC<AboutProps> = (props) => {
                         />
                         <p style={{ marginTop: 8, textAlign: 'center' }}>
                             <sub>
-                                <b>Figure 1:</b> Abdullah Karif Shahjada, 2026
+                                <b>Figure 2:</b> Conducting AI Automation Session, 2026
                             </sub>
                         </p>
                     </div>
