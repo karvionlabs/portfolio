@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from '../general';
 
 export interface HomeProps {}
 
@@ -8,25 +7,11 @@ const Home: React.FC<HomeProps> = (props) => {
         <div style={styles.page}>
             <div style={styles.header}>
                 <h1 style={styles.name}>Abdullah Karif Shahjada</h1>
-                <h2>AI Automation</h2>
-            </div>
-            <div style={styles.buttons}>
-                <Link containerStyle={styles.link} to="/about" text="ABOUT" />
-                <Link
-                    containerStyle={styles.link}
-                    to="/experience"
-                    text="EXPERIENCE"
-                />
-                <Link
-                    containerStyle={styles.link}
-                    to="/projects"
-                    text="PROJECTS"
-                />
-                <Link
-                    containerStyle={styles.link}
-                    to="/contact"
-                    text="CONTACT"
-                />
+                <h2 style={styles.title}>AI Automation Specialist</h2>
+                <h4 style={styles.subTitle}>Software Developer • App Developer • Meta Marketing</h4>
+                <p style={styles.caption}>
+                    Welcome to my official interactive portfolio. Please use the navigation menu on the left to explore my background, experience, projects, and contact channels.
+                </p>
             </div>
         </div>
     );
@@ -34,46 +19,51 @@ const Home: React.FC<HomeProps> = (props) => {
 
 const styles: StyleSheetCSS = {
     page: {
-        left: 0,
+        left: 240,
         right: 0,
         top: 0,
+        bottom: 0,
         position: 'absolute',
+        display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
         height: '100%',
+        boxSizing: 'border-box',
+        padding: '32px 48px',
     },
     header: {
         textAlign: 'center',
-        marginBottom: 64,
-        marginTop: 64,
+        display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    buttons: {
-        justifyContent: 'space-between',
-        padding: '0px 40px',
-    },
-    image: {
-        width: 800,
-    },
-    link: {
-        padding: '0px 16px',
-    },
-    nowrap: {
-        whiteSpace: 'nowrap',
+        maxWidth: 620,
     },
     name: {
-        fontSize: 54,
-        marginBottom: 16,
-        lineHeight: 1.05,
+        fontSize: 46,
+        marginBottom: 12,
+        lineHeight: 1.15,
+        fontWeight: 'bold',
+        color: '#1a1a1a',
+    },
+    title: {
+        fontSize: 22,
+        marginBottom: 8,
+        color: '#2d3748',
+        fontWeight: 600,
+    },
+    subTitle: {
+        fontSize: 15,
+        marginBottom: 20,
+        color: '#4a5568',
+        fontWeight: 500,
     },
     caption: {
-        width: '80%',
-        maxWidth: 600,
+        fontSize: 14,
+        lineHeight: 1.6,
+        color: '#4a5568',
         textAlign: 'center',
-        marginTop: 32,
     },
 };
 
