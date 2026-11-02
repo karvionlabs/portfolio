@@ -185,6 +185,14 @@ export default class Camera extends EventEmitter {
         UIEventBus.on('loadingScreenDone', () => {
             this.transition(CameraKey.IDLE, 2500, TWEEN.Easing.Exponential.Out);
         });
+
+        // Failsafe: Ensure camera points to the room/computer desk even if event is delayed
+        setTimeout(() => {
+            if (this.currentKeyframe === CameraKey.LOADING) {
+                console.warn('[Camera] Auto-transitioning to IDLE from loading fallback');
+                this.transition(CameraKey.IDLE, 2500, TWEEN.Easing.Exponential.Out);
+            }
+        }, 3200);
     }
 
     resize() {

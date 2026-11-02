@@ -67,7 +67,8 @@ export default class Audio {
         sourceName = this.getRandomVariant(sourceName);
 
         // Setup
-        const buffer = this.loadedAudio[sourceName];
+        const buffer = this.loadedAudio ? this.loadedAudio[sourceName] : null;
+        if (!buffer) return;
         const poolKey = sourceName + '_' + Object.keys(this.audioPool).length;
 
         let audio: THREE.Audio<any> | THREE.PositionalAudio = new THREE.Audio(

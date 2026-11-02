@@ -40,7 +40,13 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
         } else if (progress >= 1) {
             start();
         }
-    }, []);
+
+        // Failsafe: NEVER leave the user or visitor on a black screen for more than 3 seconds
+        const safetyTimer = setTimeout(() => {
+            start();
+        }, 3000);
+        return () => clearTimeout(safetyTimer);
+    }, [start]);
 
     useEffect(() => {
         eventBus.on('loadedSource', (data) => {
@@ -105,17 +111,16 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     };
 
     const detectWebGLContext = () => {
-        var canvas = document.createElement('canvas');
-
-        // Get WebGLRenderingContext from canvas element.
-        var gl =
-            canvas.getContext('webgl') ||
-            canvas.getContext('experimental-webgl');
-        // Report the result.
-        if (gl && gl instanceof WebGLRenderingContext) {
+        try {
+            var canvas = document.createElement('canvas');
+            var gl =
+                canvas.getContext('webgl') ||
+                canvas.getContext('experimental-webgl') ||
+                canvas.getContext('webgl2');
+            return !!gl;
+        } catch (e) {
             return true;
         }
-        return false;
     };
 
     return (
