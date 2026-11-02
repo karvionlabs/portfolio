@@ -240,7 +240,7 @@ input:active {
     margin-bottom: 32px;
     display: flex;
     flex-direction: column;
-    text-align: justify;
+    text-align: left;
 }
 
 .site-page {
