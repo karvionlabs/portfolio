@@ -129,7 +129,11 @@ export default class Camera extends EventEmitter {
             10,
             900000
         );
-        this.currentKeyframe = CameraKey.LOADING;
+        this.currentKeyframe = CameraKey.IDLE;
+        this.position.copy(this.keyframes.idle.position);
+        this.focalPoint.copy(this.keyframes.idle.focalPoint);
+        this.instance.position.copy(this.keyframes.idle.position);
+        this.instance.lookAt(this.keyframes.idle.focalPoint);
 
         this.scene.add(this.instance);
     }

@@ -8,7 +8,7 @@ interface InfoOverlayProps {
 
 const NAME_TEXT = 'Abdullah Karif Shahjada';
 const TITLE_TEXT = 'AI Automation';
-const MULTIPLIER = 1;
+const MULTIPLIER = 0.2;
 
 const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
     const visRef = useRef(visible);
@@ -49,7 +49,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                     callback,
                     refOverride
                 );
-            }, Math.random() * 50 + 50 * MULTIPLIER);
+            }, Math.random() * 10 + 12);
         } else {
             callback();
         }
@@ -72,7 +72,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ visible }) => {
                         );
                     });
                 });
-            }, 400);
+            }, 60);
         }
         visRef.current = visible;
     }, [visible]);

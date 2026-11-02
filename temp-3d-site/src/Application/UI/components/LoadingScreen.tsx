@@ -7,7 +7,7 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     const [progress, setProgress] = useState(0);
     const [toLoad, setToLoad] = useState(0);
     const [loaded, setLoaded] = useState(0);
-    const [overlayOpacity, setLoadingOverlayOpacity] = useState(1);
+    const [overlayOpacity, setLoadingOverlayOpacity] = useState(0);
     const [loadingTextOpacity, setLoadingTextOpacity] = useState(0);
     const [startPopupOpacity, setStartPopupOpacity] = useState(0);
     const [firefoxPopupOpacity, setFirefoxPopupOpacity] = useState(0);
@@ -32,20 +32,8 @@ const LoadingScreen: React.FC<LoadingProps> = () => {
     window.addEventListener('resize', onResize);
 
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('debug')) {
-            start();
-        } else if (!detectWebGLContext()) {
-            setWebGLError(true);
-        } else if (progress >= 1) {
-            start();
-        }
-
-        // Failsafe: NEVER leave the user or visitor on a black screen for more than 3 seconds
-        const safetyTimer = setTimeout(() => {
-            start();
-        }, 3000);
-        return () => clearTimeout(safetyTimer);
+        // Instantly bypass black loading screen so visitor enters directly into the 3D room
+        start();
     }, [start]);
 
     useEffect(() => {

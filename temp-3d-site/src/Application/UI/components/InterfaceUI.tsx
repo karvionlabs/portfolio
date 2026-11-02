@@ -6,46 +6,31 @@ import InfoOverlay from './InfoOverlay';
 interface InterfaceUIProps {}
 
 const InterfaceUI: React.FC<InterfaceUIProps> = ({}) => {
-    const [initLoad, setInitLoad] = useState(true);
-    const [visible, setVisible] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const [initLoad, setInitLoad] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const [loading, setLoading] = useState(false);
     const interfaceRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        UIEventBus.on('loadingScreenDone', () => {
-            setLoading(false);
-        });
-
         // find element by id and set ref
         const element = document.getElementById('ui-interactive');
         if (element) {
             // @ts-ignore
             interfaceRef.current = element;
         }
-    }, []);
 
-    const initMouseDownHandler = () => {
-        setVisible(true);
-        setInitLoad(false);
-    };
+        UIEventBus.on('loadingScreenDone', () => {
+            setLoading(false);
+            setVisible(true);
+        });
 
-    useEffect(() => {
-        if (!loading && initLoad) {
-            document.addEventListener('mousedown', initMouseDownHandler);
-            return () => {
-                document.removeEventListener('mousedown', initMouseDownHandler);
-            };
-        }
-    }, [loading, initLoad]);
-
-    useEffect(() => {
         UIEventBus.on('enterMonitor', () => {
             setVisible(false);
-            setInitLoad(false);
             if (interfaceRef.current) {
                 interfaceRef.current.style.pointerEvents = 'none';
             }
         });
+
         UIEventBus.on('leftMonitor', () => {
             setVisible(true);
             if (interfaceRef.current) {
@@ -54,9 +39,9 @@ const InterfaceUI: React.FC<InterfaceUIProps> = ({}) => {
         });
     }, []);
 
-    return !loading ? (
+    return (
         <motion.div
-            initial="hide"
+            initial="visible"
             variants={vars}
             animate={visible ? 'visible' : 'hide'}
             style={styles.wrapper}
@@ -65,8 +50,6 @@ const InterfaceUI: React.FC<InterfaceUIProps> = ({}) => {
         >
             <InfoOverlay visible={visible} />
         </motion.div>
-    ) : (
-        <></>
     );
 };
 
