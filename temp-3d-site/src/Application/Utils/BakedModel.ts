@@ -11,6 +11,10 @@ export default class BakedModel {
 
         this.texture.flipY = false;
         this.texture.encoding = THREE.sRGBEncoding;
+        this.texture.generateMipmaps = true;
+        this.texture.minFilter = THREE.LinearMipmapLinearFilter;
+        this.texture.magFilter = THREE.LinearFilter;
+        this.texture.anisotropy = 16;
 
         this.material = new THREE.MeshBasicMaterial({
             map: this.texture,

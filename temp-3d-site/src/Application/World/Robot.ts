@@ -26,8 +26,8 @@ export default class Robot {
         this.scene = this.application.scene;
         this.time = this.application.time;
 
-        // Positioned sitting directly on the brown office chair cushion, typing on the keyboard
-        this.basePosition = new THREE.Vector3(560, -640, 3050);
+        // Positioned sitting directly on the brown office chair cushion, typing towards the desk
+        this.basePosition = new THREE.Vector3(765, -520, 2400);
         this.init();
     }
 
@@ -36,8 +36,12 @@ export default class Robot {
         this.group.position.copy(this.basePosition);
 
         const textureLoader = new THREE.TextureLoader();
-        const texture = textureLoader.load('/images/robot_typing_seated.png');
+        const texture = textureLoader.load('/images/robot_typing_char_2k.png');
         texture.encoding = THREE.sRGBEncoding;
+        texture.generateMipmaps = true;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.anisotropy = 16;
 
         this.material = new THREE.SpriteMaterial({
             map: texture,
@@ -46,15 +50,17 @@ export default class Robot {
             depthWrite: false,
         });
 
-        // Scaled to match the chair cushion and desk proportions
+        // 2K Ultra-sharp sprite matching enlarged chair cushion and desk proportions
+        // Aspect ratio 966:1850 -> 0.5222
         this.sprite = new THREE.Sprite(this.material);
-        this.sprite.scale.set(2850, 2850, 1);
-        this.sprite.center.set(0.5, 0.38);
+        this.sprite.scale.set(1150, 2200, 1);
+        // Anchor at robot hips/cushion contact (0.68 horizontal, 0.38 vertical)
+        this.sprite.center.set(0.68, 0.38);
         this.group.add(this.sprite);
 
         // Glowing cyan light above antenna tip
-        this.antennaLight = new THREE.PointLight(0x00f0ff, 1.0, 500);
-        this.antennaLight.position.set(0, 320, 60);
+        this.antennaLight = new THREE.PointLight(0x00f0ff, 1.2, 600);
+        this.antennaLight.position.set(-60, 680, 50);
         this.group.add(this.antennaLight);
 
         this.scene.add(this.group);

@@ -284,7 +284,7 @@ export default class MonitorScreen extends EventEmitter {
             video: {
                 texture: this.videoTextures['video-1'],
                 blending: THREE.AdditiveBlending,
-                opacity: 0.5,
+                opacity: 0.08,
                 offset: 10,
             },
             video2: {
@@ -514,13 +514,11 @@ export default class MonitorScreen extends EventEmitter {
                     (camPos.z - dimPos.z) ** 2
             );
 
-            const opacity = 1 / (distance / 10000);
-
-            const DIM_FACTOR = 0.7;
+            // Minimal dim factor so CRT monitor screen remains bright and active from idle room view
+            const DIM_FACTOR = 0.04;
 
             // @ts-ignore
-            this.dimmingPlane.material.opacity =
-                (1 - opacity) * DIM_FACTOR + (1 - dot) * DIM_FACTOR;
+            this.dimmingPlane.material.opacity = (1 - dot) * DIM_FACTOR;
         }
     }
 }
